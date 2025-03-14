@@ -126,7 +126,7 @@ function moveBall() {
                 ballMoving = false;
             } else {
                 gameOver = true;
-                alert("Game Over!");
+                drawTitle("Game Over!");
             }
         }
 
@@ -137,8 +137,30 @@ function moveBall() {
 
         // Check for brick collisions
         checkBrickCollision();
+
+        // Win condition: if no bricks remain
+        if (bricksRemaining === 0) {
+            gameOver = true;
+            drawTitle("You Win!");
+        }
     }
 }
+
+// Draw Game Over or Win Message
+function drawTitle(message) {
+    ctx.fillStyle = "black";
+    ctx.font = "36px Arial";
+    ctx.fillText(message, GWINDOW_WIDTH / 2 - ctx.measureText(message).width / 2, GWINDOW_HEIGHT / 2);
+}
+
+// Start the game once the user clicks
+canvas.addEventListener('click', () => {
+    if (!gameStarted) {
+        gameStarted = true;
+        ballMoving = true;
+        interval = setInterval(moveBall, 1000 / 60);
+    }
+});
 
 
 // Game Loop
