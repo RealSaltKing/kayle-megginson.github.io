@@ -45,23 +45,15 @@ document.addEventListener("mousemove", (event) => {
     paddleX = Math.max(0, Math.min(event.clientX - canvas.offsetLeft - PADDLE_WIDTH / 2, GWINDOW_WIDTH - PADDLE_WIDTH));
 });
 
-// Initialize Bricks Only Once
+// Initialize Bricks
 function initializeBricks() {
     let brickXPos = (GWINDOW_WIDTH - N_COLS * (BRICK_WIDTH + BRICK_SEP)) / 2;
     let brickYPos = TOP_FRACTION * GWINDOW_HEIGHT;
-
-    bricks = []; // Only reset bricks array during initialization
-
+    bricks = [];
     for (let row = 0; row < N_ROWS; row++) {
         let color = brickColors[Math.floor(row / 2)];
         for (let col = 0; col < N_COLS; col++) {
-            bricks.push({
-                x: brickXPos,
-                y: brickYPos,
-                width: BRICK_WIDTH,
-                height: BRICK_HEIGHT,
-                color: color
-            });
+            bricks.push({ x: brickXPos, y: brickYPos, width: BRICK_WIDTH, height: BRICK_HEIGHT, color: color });
             brickXPos += BRICK_WIDTH + BRICK_SEP;
         }
         brickXPos = (GWINDOW_WIDTH - N_COLS * (BRICK_WIDTH + BRICK_SEP)) / 2;
@@ -91,16 +83,20 @@ function drawBall() {
     ctx.fill();
 }
 
+// Draw Game Message
+function drawMessage(text) {
+    ctx.fillStyle = "black";
+    ctx.font = "24px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(text, GWINDOW_WIDTH / 2, GWINDOW_HEIGHT / 2);
+}
+
 // Check Ball Collision with Bricks
 function checkBrickCollision() {
     for (let i = 0; i < bricks.length; i++) {
         let brick = bricks[i];
-
-        if (
-            ballX + BALL_DIAMETER > brick.x && ballX < brick.x + brick.width &&
-            ballY + BALL_DIAMETER > brick.y && ballY < brick.y + brick.height
-        ) {
-            bricks.splice(i, 1); // Remove the brick from array
+        if (ballX + BALL_DIAMETER > brick.x && ballX < brick.x + brick.width && ballY + BALL_DIAMETER > brick.y && ballY < brick.y + brick.height) {
+            bricks.splice(i, 1);
             bricksRemaining -= 1;
             ballVY = -ballVY;
             break;
@@ -111,17 +107,11 @@ function checkBrickCollision() {
 // Move Ball
 function moveBall() {
     if (gameOver) return;
-
     if (ballMoving) {
         ballX += ballVX;
         ballY += ballVY;
-
-        if (ballX < 0 || ballX + BALL_DIAMETER > GWINDOW_WIDTH) {
-            ballVX = -ballVX;
-        }
-        if (ballY < 0) {
-            ballVY = -ballVY;
-        }
+        if (ballX < 0 || ballX + BALL_DIAMETER > GWINDOW_WIDTH) ballVX = -ballVX;
+        if (ballY < 0) ballVY = -ballVY;
         if (ballY + BALL_DIAMETER > GWINDOW_HEIGHT) {
             lives -= 1;
             if (lives > 0) {
@@ -132,15 +122,15 @@ function moveBall() {
                 ballMoving = false;
             } else {
                 gameOver = true;
-                alert("Game Over!");
+                drawMessage("Game Over");
             }
         }
-
-        if (ballY + BALL_DIAMETER > paddleY && ballX + BALL_DIAMETER > paddleX && ballX < paddleX + PADDLE_WIDTH) {
-            ballVY = -ballVY;
-        }
-
+        if (ballY + BALL_DIAMETER > paddleY && ballX + BALL_DIAMETER > paddleX && ballX < paddleX + PADDLE_WIDTH) ballVY = -ballVY;
         checkBrickCollision();
+        if (bricksRemaining === 0) {
+            gameOver = true;
+            drawMessage("You Win!");
+        }
     }
 }
 
@@ -150,6 +140,7 @@ function gameLoop() {
     drawBricks();
     drawPaddle();
     drawBall();
+    if (gameOver) return;
     moveBall();
     requestAnimationFrame(gameLoop);
 }
@@ -175,12 +166,9 @@ function resetGame() {
     startGame();
 }
 
-// Initialize Game
+document.getElementById("resetButton").addEventListener("click", resetGame);
 initializeBricks();
 drawBricks();
 drawPaddle();
 drawBall();
-
 canvas.addEventListener("click", startGame);
-
-
