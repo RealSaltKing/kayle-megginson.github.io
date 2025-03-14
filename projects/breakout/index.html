@@ -4,14 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Breakout Game</title>
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Breakout Game (Python in Browser)</h1>
-    <p>Click "Run" to start the game.</p>
-    <button onclick="runPython()">Run</button>
-    <pre id="output"></pre>
-
-    <script src="breakout.js"></script>
+    <h1>Breakout Game</h1>
+    <canvas id="gameCanvas" width="360" height="600"></canvas>
+    <script src="game.js"></script>
 </body>
 </html>
