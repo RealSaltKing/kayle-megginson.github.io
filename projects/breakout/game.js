@@ -38,6 +38,7 @@ let paddleX = (GWINDOW_WIDTH - PADDLE_WIDTH) / 2;
 let paddleY = PADDLE_Y;
 let brickColors = ["red", "orange", "green", "cyan", "blue"];
 let gameOver = false;
+let bricks = []; // To store brick positions
 
 // Event Listener for paddle movement
 document.addEventListener("mousemove", (event) => {
@@ -54,6 +55,7 @@ function drawBricks() {
         for (let col = 0; col < N_COLS; col++) {
             ctx.fillStyle = color;
             ctx.fillRect(brickXPos, brickYPos, BRICK_WIDTH, BRICK_HEIGHT);
+            bricks.push({x: brickXPos, y: brickYPos, width: BRICK_WIDTH, height: BRICK_HEIGHT});
             brickXPos += BRICK_WIDTH + BRICK_SEP;
         }
         brickXPos = (GWINDOW_WIDTH - N_COLS * (BRICK_WIDTH + BRICK_SEP)) / 2;
@@ -73,6 +75,20 @@ function drawBall() {
     ctx.beginPath();
     ctx.arc(ballX, ballY, BALL_DIAMETER / 2, 0, Math.PI * 2, false);
     ctx.fill();
+}
+
+// Check Ball Collision with Bricks
+function checkBrickCollision() {
+    for (let i = 0; i < bricks.length; i++) {
+        let brick = bricks[i];
+        if (ballX + BALL_DIAMETER > brick.x && ballX < brick.x + brick.width && ballY + BALL_DIAMETER > brick.y && ballY < brick.y + brick.height) {
+            // Collision detected, remove the brick
+            bricks.splice(i, 1); // Remove the brick from array
+            bricksRemaining -= 1;
+            ballVY = -ballVY; // Bounce the ball
+            break;
+        }
+    }
 }
 
 // Move Ball
@@ -106,6 +122,9 @@ function moveBall() {
         if (ballY + BALL_DIAMETER > paddleY && ballX + BALL_DIAMETER > paddleX && ballX < paddleX + PADDLE_WIDTH) {
             ballVY = -ballVY;
         }
+
+        // Check for brick collisions
+        checkBrickCollision();
     }
 }
 
@@ -125,6 +144,19 @@ function startGame() {
         ballMoving = true;
         gameLoop();
     }
+}
+
+// Reset game after game over
+function resetGame() {
+    bricks = []; // Reset brick array
+    bricksRemaining = N_ROWS * N_COLS; // Reset remaining bricks
+    lives = N_BALLS; // Reset lives
+    gameOver = false;
+    ballX = (GWINDOW_WIDTH - BALL_DIAMETER) / 2;
+    ballY = (GWINDOW_HEIGHT - BALL_DIAMETER) / 2;
+    ballVX = Math.random() * (MAX_X_VELOCITY - MIN_X_VELOCITY) + MIN_X_VELOCITY;
+    ballVY = INITIAL_Y_VELOCITY;
+    startGame();
 }
 
 canvas.addEventListener("click", startGame);
