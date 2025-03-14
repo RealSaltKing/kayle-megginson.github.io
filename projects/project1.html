@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Enigma Cipher</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>
+</head>
+<body>
+    <h1>Run Python Code in Browser</h1>
+    <textarea id="python-code" rows="5" cols="50">
+print("Hello from Pyodide!")
+    </textarea>
+    <button onclick="runPython()">Run</button>
+    <pre id="output"></pre>
+
+    <script>
+        async function runPython() {
+            let pyodide = await loadPyodide();
+            let code = document.getElementById("python-code").value;
+            document.getElementById("output").innerText = pyodide.runPython(code);
+        }
+    </script>
+</body>
+</html>
