@@ -98,6 +98,11 @@ function checkBrickCollision() {
 
             // Reverse the ball's vertical velocity (bounce the ball)
             ballVY = -ballVY;
+
+            // Fix the position of the ball if it went through the brick
+            if (ballY + BALL_DIAMETER > brick.y && ballY < brick.y + brick.height) {
+                ballY = brick.y - BALL_DIAMETER; // Set ball just above the brick
+            }
             break; // Stop after the first collision
         }
     }
@@ -145,6 +150,7 @@ function moveBall() {
         }
     }
 }
+
 
 // Draw Game Over or Win Message
 function drawTitle(message) {
