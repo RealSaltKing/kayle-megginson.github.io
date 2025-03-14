@@ -166,4 +166,9 @@ function resetGame() {
     startGame();
 }
 
+// Draw initial setup (before starting the game)
+drawBricks();
+drawPaddle();
+drawBall();
+
 canvas.addEventListener("click", startGame); // Start game on click
