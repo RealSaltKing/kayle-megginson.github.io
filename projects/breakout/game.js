@@ -147,14 +147,25 @@ function moveBall() {
     }
 }
 
-// Display Message
+// Display Message with Reset Button
 function drawMessage(text) {
-    ctx.clearRect(0, 0, GWINDOW_WIDTH, GWINDOW_HEIGHT);
     ctx.font = "36px Arial";
     ctx.fillStyle = "black";
     ctx.textAlign = "center";
     ctx.fillText(text, GWINDOW_WIDTH / 2, GWINDOW_HEIGHT / 2);
     gameOver = true;
+
+    const resetButton = document.createElement("button");
+    resetButton.innerText = "Reset";
+    resetButton.style.position = "absolute";
+    resetButton.style.left = "50%";
+    resetButton.style.top = "60%";
+    resetButton.style.transform = "translate(-50%, -50%)";
+    document.body.appendChild(resetButton);
+
+    resetButton.addEventListener("click", () => {
+        location.reload();
+    });
 }
 
 // Game Loop
@@ -177,7 +188,6 @@ function startGame() {
     }
 }
 
-// Initialize Game
 initializeBricks();
 drawBricks();
 drawPaddle();
