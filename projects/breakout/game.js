@@ -50,12 +50,14 @@ function drawBricks() {
     let brickXPos = (GWINDOW_WIDTH - N_COLS * (BRICK_WIDTH + BRICK_SEP)) / 2;
     let brickYPos = TOP_FRACTION * GWINDOW_HEIGHT;
 
+    bricks = []; // Reset bricks array each time we draw the bricks
+
     for (let row = 0; row < N_ROWS; row++) {
         let color = brickColors[Math.floor(row / 2)];
         for (let col = 0; col < N_COLS; col++) {
             ctx.fillStyle = color;
             ctx.fillRect(brickXPos, brickYPos, BRICK_WIDTH, BRICK_HEIGHT);
-            bricks.push({x: brickXPos, y: brickYPos, width: BRICK_WIDTH, height: BRICK_HEIGHT});
+            bricks.push({ x: brickXPos, y: brickYPos, width: BRICK_WIDTH, height: BRICK_HEIGHT });
             brickXPos += BRICK_WIDTH + BRICK_SEP;
         }
         brickXPos = (GWINDOW_WIDTH - N_COLS * (BRICK_WIDTH + BRICK_SEP)) / 2;
@@ -81,12 +83,17 @@ function drawBall() {
 function checkBrickCollision() {
     for (let i = 0; i < bricks.length; i++) {
         let brick = bricks[i];
-        if (ballX + BALL_DIAMETER > brick.x && ballX < brick.x + brick.width && ballY + BALL_DIAMETER > brick.y && ballY < brick.y + brick.height) {
+
+        // Check if the ball intersects with the brick
+        if (
+            ballX + BALL_DIAMETER > brick.x && ballX < brick.x + brick.width &&
+            ballY + BALL_DIAMETER > brick.y && ballY < brick.y + brick.height
+        ) {
             // Collision detected, remove the brick
             bricks.splice(i, 1); // Remove the brick from array
             bricksRemaining -= 1;
             ballVY = -ballVY; // Bounce the ball
-            break;
+            break; // Stop after the first collision
         }
     }
 }
@@ -159,5 +166,4 @@ function resetGame() {
     startGame();
 }
 
-canvas.addEventListener("click", startGame);
-startGame();  // Starts the game as soon as the page loads
+canvas.addEventListener("click", startGame); // Start game on click
