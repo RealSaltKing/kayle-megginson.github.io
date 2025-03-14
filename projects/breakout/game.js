@@ -89,16 +89,21 @@ function checkBrickCollision() {
             ballX + BALL_DIAMETER > brick.x && ballX < brick.x + brick.width &&
             ballY + BALL_DIAMETER > brick.y && ballY < brick.y + brick.height
         ) {
-            // Collision detected, remove the brick
-            bricks.splice(i, 1); // Remove the brick from array
+            // Collision detected, remove the brick from array and canvas
+            bricks.splice(i, 1); // Remove the brick from the array
             bricksRemaining -= 1;
-            ballVY = -ballVY; // Bounce the ball
+
+            // Clear the brick from the canvas (by overwriting with the background color)
+            ctx.clearRect(brick.x, brick.y, brick.width, brick.height);
+
+            // Reverse the ball's vertical velocity (bounce the ball)
+            ballVY = -ballVY;
             break; // Stop after the first collision
         }
     }
 }
 
-// Move Ball
+// Ball Movement Logic
 function moveBall() {
     if (gameOver) return;
 
@@ -134,6 +139,7 @@ function moveBall() {
         checkBrickCollision();
     }
 }
+
 
 // Game Loop
 function gameLoop() {
