@@ -102,7 +102,13 @@ function checkBrickCollision() {
         ) {
             bricks.splice(i, 1);
             bricksRemaining -= 1;
-            ballVY = -INITIAL_Y_VELOCITY;
+
+            // Ensure ball bounces correctly when hitting bricks
+            if (ballVY < 0) {
+                ballVY = INITIAL_Y_VELOCITY;
+            } else {
+                ballVY = -INITIAL_Y_VELOCITY;
+            }
             break;
         }
     }
