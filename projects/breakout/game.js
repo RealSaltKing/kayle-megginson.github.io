@@ -91,6 +91,14 @@ function drawBall() {
     ctx.fill();
 }
 
+// Draw Game Over Message
+function drawGameOver(message) {
+    ctx.fillStyle = "black";
+    ctx.font = "24px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(message, GWINDOW_WIDTH / 2, GWINDOW_HEIGHT / 2);
+}
+
 // Check Ball Collision with Bricks
 function checkBrickCollision() {
     for (let i = 0; i < bricks.length; i++) {
@@ -132,7 +140,7 @@ function moveBall() {
                 ballMoving = false;
             } else {
                 gameOver = true;
-                alert("Game Over!");
+                drawGameOver("Game Over!");
             }
         }
 
@@ -141,6 +149,11 @@ function moveBall() {
         }
 
         checkBrickCollision();
+
+        if (bricksRemaining === 0) {
+            gameOver = true;
+            drawGameOver("You Win!");
+        }
     }
 }
 
@@ -151,7 +164,9 @@ function gameLoop() {
     drawPaddle();
     drawBall();
     moveBall();
-    requestAnimationFrame(gameLoop);
+    if (!gameOver) {
+        requestAnimationFrame(gameLoop);
+    }
 }
 
 // Start Game
@@ -182,5 +197,3 @@ drawPaddle();
 drawBall();
 
 canvas.addEventListener("click", startGame);
-
-
