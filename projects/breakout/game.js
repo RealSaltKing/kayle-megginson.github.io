@@ -50,7 +50,7 @@ function initializeBricks() {
     let brickXPos = (GWINDOW_WIDTH - N_COLS * (BRICK_WIDTH + BRICK_SEP)) / 2;
     let brickYPos = TOP_FRACTION * GWINDOW_HEIGHT;
 
-    bricks = [];
+    bricks = []; // Only reset bricks array during initialization
 
     for (let row = 0; row < N_ROWS; row++) {
         let color = brickColors[Math.floor(row / 2)];
@@ -100,9 +100,9 @@ function checkBrickCollision() {
             ballX + BALL_DIAMETER > brick.x && ballX < brick.x + brick.width &&
             ballY + BALL_DIAMETER > brick.y && ballY < brick.y + brick.height
         ) {
-            bricks.splice(i, 1);
+            bricks.splice(i, 1); // Remove the brick from array
             bricksRemaining -= 1;
-            ballVY = -INITIAL_Y_VELOCITY;
+            ballVY = -INITIAL_Y_VELOCITY; // Fix ball speed reset
             break;
         }
     }
@@ -131,63 +131,51 @@ function moveBall() {
                 ballVY = INITIAL_Y_VELOCITY;
                 ballMoving = false;
             } else {
-                drawMessage("Game Over!");
+                gameOver = true;
+                alert("Game Over!");
             }
         }
 
-        if (bricksRemaining === 0) {
-            drawMessage("You Win!");
-        }
-
         if (ballY + BALL_DIAMETER > paddleY && ballX + BALL_DIAMETER > paddleX && ballX < paddleX + PADDLE_WIDTH) {
-            ballVY = -INITIAL_Y_VELOCITY;
+            ballVY = -INITIAL_Y_VELOCITY; // Fix paddle bounce speed reset
         }
 
         checkBrickCollision();
     }
 }
 
-// Display Message with Reset Button
-function drawMessage(text) {
-    ctx.font = "36px Arial";
-    ctx.fillStyle = "black";
-    ctx.textAlign = "center";
-    ctx.fillText(text, GWINDOW_WIDTH / 2, GWINDOW_HEIGHT / 2);
-    gameOver = true;
-
-    const resetButton = document.createElement("button");
-    resetButton.innerText = "Reset";
-    resetButton.style.position = "absolute";
-    resetButton.style.left = "50%";
-    resetButton.style.top = "60%";
-    resetButton.style.transform = "translate(-50%, -50%)";
-    document.body.appendChild(resetButton);
-
-    resetButton.addEventListener("click", () => {
-        location.reload();
-    });
-}
-
 // Game Loop
 function gameLoop() {
-    if (!gameOver) {
-        ctx.clearRect(0, 0, GWINDOW_WIDTH, GWINDOW_HEIGHT);
-        drawBricks();
-        drawPaddle();
-        drawBall();
-        moveBall();
-        requestAnimationFrame(gameLoop);
-    }
+    ctx.clearRect(0, 0, GWINDOW_WIDTH, GWINDOW_HEIGHT);
+    drawBricks();
+    drawPaddle();
+    drawBall();
+    moveBall();
+    requestAnimationFrame(gameLoop);
 }
 
 // Start Game
 function startGame() {
-    if (!ballMoving && !gameOver) {
+    if (!ballMoving) {
         ballMoving = true;
         gameLoop();
     }
 }
 
+// Reset Game
+function resetGame() {
+    initializeBricks();
+    bricksRemaining = N_ROWS * N_COLS;
+    lives = N_BALLS;
+    gameOver = false;
+    ballX = (GWINDOW_WIDTH - BALL_DIAMETER) / 2;
+    ballY = (GWINDOW_HEIGHT - BALL_DIAMETER) / 2;
+    ballVX = Math.random() * (MAX_X_VELOCITY - MIN_X_VELOCITY) + MIN_X_VELOCITY;
+    ballVY = INITIAL_Y_VELOCITY;
+    startGame();
+}
+
+// Initialize Game
 initializeBricks();
 drawBricks();
 drawPaddle();
