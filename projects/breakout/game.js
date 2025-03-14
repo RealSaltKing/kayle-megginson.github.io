@@ -99,9 +99,11 @@ function checkBrickCollision() {
             // Reverse the ball's vertical velocity (bounce the ball)
             ballVY = -ballVY;
 
-            // Fix the position of the ball if it went through the brick
-            if (ballY + BALL_DIAMETER > brick.y && ballY < brick.y + brick.height) {
-                ballY = brick.y - BALL_DIAMETER; // Set ball just above the brick
+            // Adjust ball's position to prevent overlapping the brick
+            if (ballVY > 0) { // If the ball is moving downwards
+                ballY = brick.y - BALL_DIAMETER; // Set ball above the brick
+            } else { // If the ball is moving upwards
+                ballY = brick.y + brick.height; // Set ball below the brick
             }
             break; // Stop after the first collision
         }
@@ -131,7 +133,7 @@ function moveBall() {
                 ballMoving = false;
             } else {
                 gameOver = true;
-                drawTitle("Game Over!");
+                alert("Game Over!");
             }
         }
 
@@ -150,6 +152,7 @@ function moveBall() {
         }
     }
 }
+
 
 
 // Draw Game Over or Win Message
