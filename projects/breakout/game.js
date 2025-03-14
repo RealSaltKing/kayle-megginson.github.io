@@ -38,30 +38,42 @@ let paddleX = (GWINDOW_WIDTH - PADDLE_WIDTH) / 2;
 let paddleY = PADDLE_Y;
 let brickColors = ["red", "orange", "green", "cyan", "blue"];
 let gameOver = false;
-let bricks = []; // To store brick positions
+let bricks = [];
 
-// Event Listener for paddle movement
+// Paddle Movement
 document.addEventListener("mousemove", (event) => {
     paddleX = Math.max(0, Math.min(event.clientX - canvas.offsetLeft - PADDLE_WIDTH / 2, GWINDOW_WIDTH - PADDLE_WIDTH));
 });
 
-// Draw Bricks
-function drawBricks() {
+// Initialize Bricks Only Once
+function initializeBricks() {
     let brickXPos = (GWINDOW_WIDTH - N_COLS * (BRICK_WIDTH + BRICK_SEP)) / 2;
     let brickYPos = TOP_FRACTION * GWINDOW_HEIGHT;
 
-    bricks = []; // Reset bricks array each time we draw the bricks
+    bricks = []; // Only reset bricks array during initialization
 
     for (let row = 0; row < N_ROWS; row++) {
         let color = brickColors[Math.floor(row / 2)];
         for (let col = 0; col < N_COLS; col++) {
-            ctx.fillStyle = color;
-            ctx.fillRect(brickXPos, brickYPos, BRICK_WIDTH, BRICK_HEIGHT);
-            bricks.push({ x: brickXPos, y: brickYPos, width: BRICK_WIDTH, height: BRICK_HEIGHT });
+            bricks.push({
+                x: brickXPos,
+                y: brickYPos,
+                width: BRICK_WIDTH,
+                height: BRICK_HEIGHT,
+                color: color
+            });
             brickXPos += BRICK_WIDTH + BRICK_SEP;
         }
         brickXPos = (GWINDOW_WIDTH - N_COLS * (BRICK_WIDTH + BRICK_SEP)) / 2;
         brickYPos += BRICK_HEIGHT + BRICK_SEP;
+    }
+}
+
+// Draw Bricks
+function drawBricks() {
+    for (let brick of bricks) {
+        ctx.fillStyle = brick.color;
+        ctx.fillRect(brick.x, brick.y, brick.width, brick.height);
     }
 }
 
@@ -84,16 +96,14 @@ function checkBrickCollision() {
     for (let i = 0; i < bricks.length; i++) {
         let brick = bricks[i];
 
-        // Check if the ball intersects with the brick
         if (
             ballX + BALL_DIAMETER > brick.x && ballX < brick.x + brick.width &&
             ballY + BALL_DIAMETER > brick.y && ballY < brick.y + brick.height
         ) {
-            // Collision detected, remove the brick
             bricks.splice(i, 1); // Remove the brick from array
             bricksRemaining -= 1;
-            ballVY = -ballVY; // Bounce the ball
-            break; // Stop after the first collision
+            ballVY = -ballVY;
+            break;
         }
     }
 }
@@ -106,7 +116,6 @@ function moveBall() {
         ballX += ballVX;
         ballY += ballVY;
 
-        // Ball and wall collision
         if (ballX < 0 || ballX + BALL_DIAMETER > GWINDOW_WIDTH) {
             ballVX = -ballVX;
         }
@@ -118,6 +127,8 @@ function moveBall() {
             if (lives > 0) {
                 ballX = (GWINDOW_WIDTH - BALL_DIAMETER) / 2;
                 ballY = (GWINDOW_HEIGHT - BALL_DIAMETER) / 2;
+                ballVX = Math.random() * (MAX_X_VELOCITY - MIN_X_VELOCITY) + MIN_X_VELOCITY;
+                ballVY = INITIAL_Y_VELOCITY;
                 ballMoving = false;
             } else {
                 gameOver = true;
@@ -125,12 +136,10 @@ function moveBall() {
             }
         }
 
-        // Paddle collision
         if (ballY + BALL_DIAMETER > paddleY && ballX + BALL_DIAMETER > paddleX && ballX < paddleX + PADDLE_WIDTH) {
             ballVY = -ballVY;
         }
 
-        // Check for brick collisions
         checkBrickCollision();
     }
 }
@@ -153,11 +162,11 @@ function startGame() {
     }
 }
 
-// Reset game after game over
+// Reset Game
 function resetGame() {
-    bricks = []; // Reset brick array
-    bricksRemaining = N_ROWS * N_COLS; // Reset remaining bricks
-    lives = N_BALLS; // Reset lives
+    initializeBricks();
+    bricksRemaining = N_ROWS * N_COLS;
+    lives = N_BALLS;
     gameOver = false;
     ballX = (GWINDOW_WIDTH - BALL_DIAMETER) / 2;
     ballY = (GWINDOW_HEIGHT - BALL_DIAMETER) / 2;
@@ -166,9 +175,11 @@ function resetGame() {
     startGame();
 }
 
-// Draw initial setup (before starting the game)
+// Initialize Game
+initializeBricks();
 drawBricks();
 drawPaddle();
 drawBall();
 
-canvas.addEventListener("click", startGame); // Start game on click
+canvas.addEventListener("click", startGame);
+
