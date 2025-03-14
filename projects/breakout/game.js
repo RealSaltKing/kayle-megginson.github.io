@@ -102,7 +102,7 @@ function checkBrickCollision() {
         ) {
             bricks.splice(i, 1); // Remove the brick from array
             bricksRemaining -= 1;
-            ballVY = -INITIAL_Y_VELOCITY; // Fix ball speed reset
+            ballVY = -ballVY;
             break;
         }
     }
@@ -137,7 +137,7 @@ function moveBall() {
         }
 
         if (ballY + BALL_DIAMETER > paddleY && ballX + BALL_DIAMETER > paddleX && ballX < paddleX + PADDLE_WIDTH) {
-            ballVY = -INITIAL_Y_VELOCITY; // Fix paddle bounce speed reset
+            ballVY = -ballVY;
         }
 
         checkBrickCollision();
