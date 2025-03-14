@@ -104,8 +104,7 @@ function checkBrickCollision() {
             }
 
             // Clear the brick from the canvas (by redrawing the background)
-            ctx.fillStyle = "#FFFFFF";
-            ctx.fillRect(brick.x, brick.y, brick.width, brick.height);
+            ctx.clearRect(brick.x, brick.y, brick.width, brick.height);
             break; // Stop after the first collision
         }
     }
@@ -157,8 +156,6 @@ function moveBall() {
     }
 }
 
-
-
 // Draw Game Over or Win Message
 function drawTitle(message) {
     ctx.fillStyle = "black";
@@ -174,7 +171,6 @@ canvas.addEventListener('click', () => {
         interval = setInterval(moveBall, 1000 / 60);
     }
 });
-
 
 // Game Loop
 function gameLoop() {
