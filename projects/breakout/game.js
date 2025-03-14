@@ -33,6 +33,7 @@ let bricksRemaining = N_ROWS * N_COLS;
 let ballX = (GWINDOW_WIDTH - BALL_DIAMETER) / 2;
 let ballY = (GWINDOW_HEIGHT - BALL_DIAMETER) / 2;
 let ballVX = Math.random() * (MAX_X_VELOCITY - MIN_X_VELOCITY) + MIN_X_VELOCITY;
+if (Math.random() < 0.5) ballVX = -ballVX;
 let ballVY = INITIAL_Y_VELOCITY;
 let paddleX = (GWINDOW_WIDTH - PADDLE_WIDTH) / 2;
 let paddleY = PADDLE_Y;
@@ -93,18 +94,16 @@ function checkBrickCollision() {
             bricks.splice(i, 1); // Remove the brick from the array
             bricksRemaining -= 1;
 
+            // Clear the brick from the canvas (by overwriting with the background color)
+            ctx.clearRect(brick.x, brick.y, brick.width, brick.height);
+
             // Reverse the ball's vertical velocity (bounce the ball)
             ballVY = -ballVY;
 
-            // Adjust ball's position to prevent overlapping the brick
-            if (ballVY > 0) { // If the ball is moving downwards
-                ballY = brick.y - BALL_DIAMETER; // Set ball above the brick
-            } else { // If the ball is moving upwards
-                ballY = brick.y + brick.height; // Set ball below the brick
+            // Fix the position of the ball if it went through the brick
+            if (ballY + BALL_DIAMETER > brick.y && ballY < brick.y + brick.height) {
+                ballY = brick.y - BALL_DIAMETER; // Set ball just above the brick
             }
-
-            // Clear the brick from the canvas (by redrawing the background)
-            ctx.clearRect(brick.x, brick.y, brick.width, brick.height);
             break; // Stop after the first collision
         }
     }
@@ -133,16 +132,14 @@ function moveBall() {
                 ballMoving = false;
             } else {
                 gameOver = true;
-                alert("Game Over!");
+                drawTitle("Game Over!");
             }
         }
 
-        if (ballY + BALL_DIAMETER > paddleY && ballY < paddleY + PADDLE_HEIGHT && ballX + BALL_DIAMETER > paddleX && ballX < paddleX + PADDLE_WIDTH) {
+        // Paddle collision
+        if (ballY + BALL_DIAMETER > paddleY && ballX + BALL_DIAMETER > paddleX && ballX < paddleX + PADDLE_WIDTH) {
             ballVY = -ballVY;
-
-            // Adjust ball's position to prevent overlapping the paddle
-            ballY = paddleY - BALL_DIAMETER;
-            ballVY = -ballVY;
+            ballY = paddleY - BALL_DIAMETER; // Make sure the ball is above the paddle to prevent clipping
         }
 
         // Check for brick collisions
@@ -165,10 +162,10 @@ function drawTitle(message) {
 
 // Start the game once the user clicks
 canvas.addEventListener('click', () => {
-    if (!gameStarted) {
-        gameStarted = true;
+    if (!ballMoving) {
         ballMoving = true;
-        interval = setInterval(moveBall, 1000 / 60);
+        ballVY = Math.abs(ballVY); // Ensure the ball moves downward
+        setInterval(moveBall, TIME_STEP);
     }
 });
 
@@ -194,11 +191,12 @@ function startGame() {
 function resetGame() {
     bricks = []; // Reset brick array
     bricksRemaining = N_ROWS * N_COLS; // Reset remaining bricks
-    ballVX = (ballVX > 0 ? 1 : -1) * (Math.random() * (MAX_X_VELOCITY - MIN_X_VELOCITY) + MIN_X_VELOCITY);
-    ballVY = (ballVY > 0 ? 1 : -1) * INITIAL_Y_VELOCITY;
+    lives = N_BALLS; // Reset lives
+    gameOver = false;
     ballX = (GWINDOW_WIDTH - BALL_DIAMETER) / 2;
     ballY = (GWINDOW_HEIGHT - BALL_DIAMETER) / 2;
     ballVX = Math.random() * (MAX_X_VELOCITY - MIN_X_VELOCITY) + MIN_X_VELOCITY;
+    if (Math.random() < 0.5) ballVX = -ballVX;
     ballVY = INITIAL_Y_VELOCITY;
     startGame();
 }
