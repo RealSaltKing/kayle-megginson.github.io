@@ -1,4 +1,4 @@
-const canvas = document.createElementbyID("gameCanvas");
+const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 // Constants
@@ -25,9 +25,6 @@ const PADDLE_WIDTH = BRICK_WIDTH / BRICK_TO_PADDLE_RATIO;
 const PADDLE_HEIGHT = BRICK_HEIGHT / BRICK_TO_PADDLE_RATIO;
 const PADDLE_Y = (1 - BOTTOM_FRACTION) * GWINDOW_HEIGHT - PADDLE_HEIGHT;
 const BALL_DIAMETER = BRICK_WIDTH / BRICK_TO_BALL_RATIO;
-
-canvas.width = GWINDOW_WIDTH;
-canvas.height = GWINDOW_HEIGHT;
 
 let bricks = [];
 let lives = N_BALLS;
