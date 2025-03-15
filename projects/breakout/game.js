@@ -1,4 +1,7 @@
-//Almost perfect
+const canvas = document.createElement("canvas");
+document.body.appendChild(canvas);
+const ctx = canvas.getContext("2d");
+
 // Constants
 const GWINDOW_WIDTH = 360;
 const GWINDOW_HEIGHT = 600;
@@ -26,10 +29,6 @@ const BALL_DIAMETER = BRICK_WIDTH / BRICK_TO_BALL_RATIO;
 
 canvas.width = GWINDOW_WIDTH;
 canvas.height = GWINDOW_HEIGHT;
-
-const canvas = document.createElement("canvas");
-document.body.appendChild(canvas);
-const ctx = canvas.getContext("2d");
 
 let bricks = [];
 let lives = N_BALLS;
@@ -128,3 +127,34 @@ function checkCollisions() {
         return true;
     });
 }
+
+function drawTitle(text) {
+    ctx.fillStyle = "black";
+    ctx.font = "36px Arial";
+    ctx.fillText(text, GWINDOW_WIDTH / 4, GWINDOW_HEIGHT / 2);
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBricks();
+    drawPaddle();
+    drawBall();
+}
+
+function update() {
+    moveBall();
+    draw();
+    requestAnimationFrame(update);
+}
+
+canvas.addEventListener("mousemove", event => {
+    let rect = canvas.getBoundingClientRect();
+    let x = event.clientX - rect.left - paddle.width / 2;
+    paddle.x = Math.max(0, Math.min(x, GWINDOW_WIDTH - paddle.width));
+});
+
+canvas.addEventListener("click", () => {
+    if (!ballMoving) ballMoving = true;
+});
+
+update();
