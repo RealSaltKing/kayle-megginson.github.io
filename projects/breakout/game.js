@@ -1,6 +1,3 @@
-const canvas = document.createElement("canvas");
-document.body.appendChild(canvas);
-const ctx = canvas.getContext("2d");
 
 // Constants
 const GWINDOW_WIDTH = 360;
@@ -14,10 +11,10 @@ const BRICK_SEP = 2;
 const TOP_FRACTION = 0.1;
 const BOTTOM_FRACTION = 0.05;
 const N_BALLS = 3;
-const TIME_STEP = 7;
-const INITIAL_Y_VELOCITY = 2.0;
-const MIN_X_VELOCITY = 1.0;
-const MAX_X_VELOCITY = 2.0;
+const TIME_STEP = 9;
+const INITIAL_Y_VELOCITY = 3.0; // Increased velocity
+const MIN_X_VELOCITY = 1.5; // Increased velocity
+const MAX_X_VELOCITY = 3.0; // Increased velocity
 
 // Derived Constants
 const BRICK_WIDTH = (GWINDOW_WIDTH - (N_COLS + 1) * BRICK_SEP) / N_COLS;
@@ -29,6 +26,10 @@ const BALL_DIAMETER = BRICK_WIDTH / BRICK_TO_BALL_RATIO;
 
 canvas.width = GWINDOW_WIDTH;
 canvas.height = GWINDOW_HEIGHT;
+
+const canvas = document.createElement("canvas");
+document.body.appendChild(canvas);
+const ctx = canvas.getContext("2d");
 
 let bricks = [];
 let lives = N_BALLS;
