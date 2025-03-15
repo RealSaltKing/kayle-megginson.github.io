@@ -13,7 +13,7 @@ BRICK_SEP = 2
 TOP_FRACTION = 0.1
 BOTTOM_FRACTION = 0.05
 N_BALLS = 3
-TIME_STEP = 10
+TIME_STEP = 7
 INITIAL_Y_VELOCITY = 3.0
 MIN_X_VELOCITY = 1.0
 MAX_X_VELOCITY = 3.0
@@ -88,7 +88,9 @@ def breakout():
         if not ball_moving:
             # Change vy to be positive so the ball moves downward
             gw.vy = abs(gw.vy)
-            gw.set_interval(move_ball, TIME_STEP)
+            if not hasattr(gw, 'interval_set'):
+                gw.set_interval(move_ball, TIME_STEP)
+                gw.interval_set = True
             ball_moving = True
 
     gw.add_event_listener("click", mouse_click)

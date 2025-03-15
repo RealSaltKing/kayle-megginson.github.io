@@ -10,7 +10,7 @@ const BRICK_SEP = 2;
 const TOP_FRACTION = 0.1;
 const BOTTOM_FRACTION = 0.05;
 const N_BALLS = 3;
-const TIME_STEP = 10;
+const TIME_STEP = 7;
 const INITIAL_Y_VELOCITY = 3.0;
 const MIN_X_VELOCITY = 1.0;
 const MAX_X_VELOCITY = 3.0;
@@ -39,6 +39,7 @@ let paddleY = PADDLE_Y;
 let brickColors = ["red", "orange", "green", "cyan", "blue"];
 let gameOver = false;
 let bricks = [];
+let intervalSet = false;
 
 // Paddle Movement
 document.addEventListener("mousemove", (event) => {
@@ -172,6 +173,11 @@ function gameLoop() {
 // Start Game
 function startGame() {
     if (!ballMoving) {
+        ballVY = Math.abs(ballVY); // Ensure the ball moves downward
+        if (!intervalSet) {
+            setInterval(moveBall, TIME_STEP);
+            intervalSet = true;
+        }
         ballMoving = true;
         gameLoop();
     }
