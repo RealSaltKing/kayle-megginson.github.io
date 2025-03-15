@@ -15,9 +15,9 @@ const TOP_FRACTION = 0.1;
 const BOTTOM_FRACTION = 0.05;
 const N_BALLS = 3;
 const TIME_STEP = 7;
-const INITIAL_Y_VELOCITY = 3.0;
+const INITIAL_Y_VELOCITY = 2.0;
 const MIN_X_VELOCITY = 1.0;
-const MAX_X_VELOCITY = 3.0;
+const MAX_X_VELOCITY = 2.0;
 
 // Derived Constants
 const BRICK_WIDTH = (GWINDOW_WIDTH - (N_COLS + 1) * BRICK_SEP) / N_COLS;
