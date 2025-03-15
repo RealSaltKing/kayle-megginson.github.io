@@ -17,9 +17,41 @@ canvas {
     margin: 20px auto;
 }
 
-#backButton {
-    margin-top: 20px;
-    padding: 10px 20px;
+/* General Button Style */
+button {
+    font-family: Arial, sans-serif;
     font-size: 16px;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Back to Main Button */
+#backToMain {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+#backToMain:hover {
+    background-color: #45a049;
+}
+
+/* Reset Game Button */
+#resetGame {
+    background-color: #f44336; /* Red */
+    color: white;
+}
+
+#resetGame:hover {
+    background-color: #e53935;
+}
+
+/* Center the buttons below the game */
+button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
