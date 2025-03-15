@@ -1,7 +1,3 @@
-const canvas = document.createElement("canvas");
-document.body.appendChild(canvas);
-const ctx = canvas.getContext("2d");
-
 // Constants
 const GWINDOW_WIDTH = 360;
 const GWINDOW_HEIGHT = 600;
