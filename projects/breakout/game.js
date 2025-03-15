@@ -1,3 +1,4 @@
+//Almost perfect
 // Constants
 const GWINDOW_WIDTH = 360;
 const GWINDOW_HEIGHT = 600;
@@ -10,10 +11,10 @@ const BRICK_SEP = 2;
 const TOP_FRACTION = 0.1;
 const BOTTOM_FRACTION = 0.05;
 const N_BALLS = 3;
-const TIME_STEP = 7;
-const INITIAL_Y_VELOCITY = 3.0;
-const MIN_X_VELOCITY = 1.0;
-const MAX_X_VELOCITY = 3.0;
+const TIME_STEP = 9;
+const INITIAL_Y_VELOCITY = 3.0; // Increased velocity
+const MIN_X_VELOCITY = 1.5; // Increased velocity
+const MAX_X_VELOCITY = 3.0; // Increased velocity
 
 // Derived Constants
 const BRICK_WIDTH = (GWINDOW_WIDTH - (N_COLS + 1) * BRICK_SEP) / N_COLS;
@@ -23,54 +24,42 @@ const PADDLE_HEIGHT = BRICK_HEIGHT / BRICK_TO_PADDLE_RATIO;
 const PADDLE_Y = (1 - BOTTOM_FRACTION) * GWINDOW_HEIGHT - PADDLE_HEIGHT;
 const BALL_DIAMETER = BRICK_WIDTH / BRICK_TO_BALL_RATIO;
 
-const canvas = document.getElementById("gameCanvas");
+canvas.width = GWINDOW_WIDTH;
+canvas.height = GWINDOW_HEIGHT;
+
+const canvas = document.createElement("canvas");
+document.body.appendChild(canvas);
 const ctx = canvas.getContext("2d");
 
-// Variables
-let ballMoving = false;
+let bricks = [];
 let lives = N_BALLS;
 let bricksRemaining = N_ROWS * N_COLS;
-let ballX = (GWINDOW_WIDTH - BALL_DIAMETER) / 2;
-let ballY = (GWINDOW_HEIGHT - BALL_DIAMETER) / 2;
-let ballVX = Math.random() * (MAX_X_VELOCITY - MIN_X_VELOCITY) + MIN_X_VELOCITY;
-let ballVY = INITIAL_Y_VELOCITY;
-let paddleX = (GWINDOW_WIDTH - PADDLE_WIDTH) / 2;
-let paddleY = PADDLE_Y;
-let brickColors = ["red", "orange", "green", "cyan", "blue"];
+
+// Paddle
+let paddle = { x: GWINDOW_WIDTH / 2 - PADDLE_WIDTH / 2, y: PADDLE_Y, width: PADDLE_WIDTH, height: PADDLE_HEIGHT };
+
+// Ball
+let ball = { x: GWINDOW_WIDTH / 2, y: GWINDOW_HEIGHT / 2, vx: Math.random() * (MAX_X_VELOCITY - MIN_X_VELOCITY) + MIN_X_VELOCITY, vy: INITIAL_Y_VELOCITY };
+ball.vx *= Math.random() < 0.5 ? -1 : 1;
+
+let ballMoving = false;
 let gameOver = false;
-let bricks = [];
-let intervalSet = false;
 
-// Paddle Movement
-document.addEventListener("mousemove", (event) => {
-    paddleX = Math.max(0, Math.min(event.clientX - canvas.offsetLeft - PADDLE_WIDTH / 2, GWINDOW_WIDTH - PADDLE_WIDTH));
-});
-
-// Initialize Bricks Only Once
-function initializeBricks() {
-    let brickXPos = (GWINDOW_WIDTH - N_COLS * (BRICK_WIDTH + BRICK_SEP)) / 2;
-    let brickYPos = TOP_FRACTION * GWINDOW_HEIGHT;
-
-    bricks = []; // Only reset bricks array during initialization
-
+function createBricks() {
+    let colors = ["red", "orange", "green", "cyan", "blue"];
+    let brickY = TOP_FRACTION * GWINDOW_HEIGHT;
     for (let row = 0; row < N_ROWS; row++) {
-        let color = brickColors[Math.floor(row / 2)];
+        let rowBricks = [];
+        let color = colors[Math.floor(row / 2)];
         for (let col = 0; col < N_COLS; col++) {
-            bricks.push({
-                x: brickXPos,
-                y: brickYPos,
-                width: BRICK_WIDTH,
-                height: BRICK_HEIGHT,
-                color: color
-            });
-            brickXPos += BRICK_WIDTH + BRICK_SEP;
+            rowBricks.push({ x: col * (BRICK_WIDTH + BRICK_SEP), y: brickY, width: BRICK_WIDTH, height: BRICK_HEIGHT, color });
         }
-        brickXPos = (GWINDOW_WIDTH - N_COLS * (BRICK_WIDTH + BRICK_SEP)) / 2;
-        brickYPos += BRICK_HEIGHT + BRICK_SEP;
+        bricks.push(...rowBricks);
+        brickY += BRICK_HEIGHT + BRICK_SEP;
     }
 }
+createBricks();
 
-// Draw Bricks
 function drawBricks() {
     bricks.forEach(brick => {
         ctx.fillStyle = brick.color;
@@ -78,128 +67,64 @@ function drawBricks() {
     });
 }
 
-// Draw Paddle
 function drawPaddle() {
     ctx.fillStyle = "black";
-    ctx.fillRect(paddleX, paddleY, PADDLE_WIDTH, PADDLE_HEIGHT);
+    ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
 }
 
-// Draw Ball
 function drawBall() {
     ctx.fillStyle = "black";
     ctx.beginPath();
-    ctx.arc(ballX, ballY, BALL_DIAMETER / 2, 0, Math.PI * 2);
+    ctx.arc(ball.x, ball.y, BALL_DIAMETER / 2, 0, Math.PI * 2);
     ctx.fill();
 }
 
-// Draw Game Over Message
-function drawGameOver(message) {
-    ctx.fillStyle = "black";
-    ctx.font = "24px Arial";
-    ctx.textAlign = "center";
-    ctx.fillText(message, GWINDOW_WIDTH / 2, GWINDOW_HEIGHT / 2);
-}
-
-// Check Ball Collision with Bricks
-function checkBrickCollision() {
-    for (let i = 0; i < bricks.length; i++) {
-        let brick = bricks[i];
-
-        if (
-            ballX + BALL_DIAMETER > brick.x && ballX < brick.x + brick.width &&
-            ballY + BALL_DIAMETER > brick.y && ballY < brick.y + brick.height
-        ) {
-            bricks.splice(i, 1); // Remove the brick from array
-            bricksRemaining -= 1;
-            ballVY = -ballVY;
-            break;
-        }
-    }
-}
-
-// Move Ball
 function moveBall() {
-    if (gameOver) return;
+    if (!ballMoving || gameOver) return;
+    ball.x += ball.vx;
+    ball.y += ball.vy;
 
-    if (ballMoving) {
-        ballX += ballVX;
-        ballY += ballVY;
-
-        if (ballX < 0 || ballX + BALL_DIAMETER > GWINDOW_WIDTH) {
-            ballVX = -ballVX;
-        }
-        if (ballY < 0) {
-            ballVY = -ballVY;
-        }
-        if (ballY + BALL_DIAMETER > GWINDOW_HEIGHT) {
-            lives -= 1;
-            if (lives > 0) {
-                ballX = (GWINDOW_WIDTH - BALL_DIAMETER) / 2;
-                ballY = (GWINDOW_HEIGHT - BALL_DIAMETER) / 2;
-                ballVX = Math.random() * (MAX_X_VELOCITY - MIN_X_VELOCITY) + MIN_X_VELOCITY;
-                ballVY = INITIAL_Y_VELOCITY;
-                ballMoving = false;
-            } else {
-                gameOver = true;
-                drawGameOver("Game Over!");
-            }
-        }
-
-        if (ballY + BALL_DIAMETER > paddleY && ballX + BALL_DIAMETER > paddleX && ballX < paddleX + PADDLE_WIDTH) {
-            ballVY = -ballVY;
-        }
-
-        checkBrickCollision();
-
-        if (bricksRemaining === 0) {
+    if (ball.x < 0 || ball.x + BALL_DIAMETER > GWINDOW_WIDTH) ball.vx *= -1;
+    if (ball.y < 0) ball.vy *= -1;
+    if (ball.y + BALL_DIAMETER > GWINDOW_HEIGHT) {
+        lives--;
+        if (lives > 0) {
+            ball.x = GWINDOW_WIDTH / 2;
+            ball.y = GWINDOW_HEIGHT / 2;
+            ballMoving = false;
+        } else {
+            drawTitle("Game Over");
             gameOver = true;
-            drawGameOver("You Win!");
         }
     }
+    checkCollisions();
 }
 
-// Game Loop
-function gameLoop() {
-    ctx.clearRect(0, 0, GWINDOW_WIDTH, GWINDOW_HEIGHT);
-    drawBricks();
-    drawPaddle();
-    drawBall();
-    moveBall();
-    if (!gameOver) {
-        requestAnimationFrame(gameLoop);
+function checkCollisions() {
+    if (
+        ball.x > paddle.x &&
+        ball.x < paddle.x + paddle.width &&
+        ball.y + BALL_DIAMETER > paddle.y
+    ) {
+        ball.vy *= -1;
+        ball.y = paddle.y - BALL_DIAMETER;
     }
-}
 
-// Start Game
-function startGame() {
-    if (!ballMoving) {
-        ballVY = Math.abs(ballVY); // Ensure the ball moves downward
-        if (!intervalSet) {
-            setInterval(moveBall, TIME_STEP);
-            intervalSet = true;
+    bricks = bricks.filter(brick => {
+        if (
+            ball.x > brick.x &&
+            ball.x < brick.x + brick.width &&
+            ball.y > brick.y &&
+            ball.y < brick.y + brick.height
+        ) {
+            ball.vy *= -1;
+            bricksRemaining--;
+            if (bricksRemaining === 0) {
+                drawTitle("You Win!");
+                gameOver = true;
+            }
+            return false;
         }
-        ballMoving = true;
-        gameLoop();
-    }
+        return true;
+    });
 }
-
-// Reset Game
-function resetGame() {
-    initializeBricks();
-    bricksRemaining = N_ROWS * N_COLS;
-    lives = N_BALLS;
-    gameOver = false;
-    ballX = (GWINDOW_WIDTH - BALL_DIAMETER) / 2;
-    ballY = (GWINDOW_HEIGHT - BALL_DIAMETER) / 2;
-    ballVX = Math.random() * (MAX_X_VELOCITY - MIN_X_VELOCITY) + MIN_X_VELOCITY;
-    ballVY = INITIAL_Y_VELOCITY;
-    startGame();
-}
-
-// Initialize Game
-initializeBricks();
-drawBricks();
-drawPaddle();
-drawBall();
-
-canvas.addEventListener("click", startGame);
