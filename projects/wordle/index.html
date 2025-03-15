@@ -4,20 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wordle Game</title>
-    <style>
-        /* Add your CSS styles here, like for the grid, keys, etc. */
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        /* Add any additional styles for your game layout */
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Wordle Game</h1>
-    <div id="game-container"></div> <!-- This is where the game will be rendered -->
-
+    <canvas id="gameCanvas"></canvas>
+    <div id="keyboard"></div>
+    <button id="backToMain" onclick="window.location.href='https://realsaltking.github.io/kayle-megginson.github.io/'">Back to Portfolio</button>
+    <button id="resetGame" onclick="window.location.href='https://realsaltking.github.io/kayle-megginson.github.io/projects/wordle/index.html'">Reset Game</button>
     <script src="game.js"></script>
 </body>
 </html>
