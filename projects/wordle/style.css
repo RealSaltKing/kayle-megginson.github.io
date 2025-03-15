@@ -1,0 +1,24 @@
+/* Center the title in the header */
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    background-color: #f3f3f3;
+}
+
+h1 {
+    margin: 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 40px;
+    color: #333;
+}
+
+/* Center the game container */
+#game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
