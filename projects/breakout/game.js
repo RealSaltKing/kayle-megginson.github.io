@@ -1,5 +1,4 @@
 const canvas = document.createElementbyID("gameCanvas");
-document.body.appendChild(canvas);
 const ctx = canvas.getContext("2d");
 
 // Constants
