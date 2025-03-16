@@ -9,8 +9,9 @@
     text-align: center; /* Align items inside the container */
     padding: 10px; /* Add padding for better spacing on mobile */
     box-sizing: border-box; /* Include padding in the element's total width and height */
-    padding-left: 50%; /* Add padding for better visibility on mobile */
-    padding-right: 50%; /* Add padding for better visibility on mobile */
+    padding-left: 5%; /* Add padding for better visibility on mobile */
+    padding-right: 5%; /* Add padding for better visibility on mobile */
+    overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 /* Center the canvas properly */
@@ -34,8 +35,8 @@ canvas {
     padding: 10px; /* Add padding for better spacing on mobile */
     box-sizing: border-box; /* Include padding in the element's total width and height */
     overflow: hidden; /* Prevent content from overflowing */
-    padding-left: 50%; /* Add padding for better visibility on mobile */
-    padding-right: 50%; /* Add padding for better visibility on mobile */
+    padding-left: 5%; /* Add padding for better visibility on mobile */
+    padding-right: 5%; /* Add padding for better visibility on mobile */
 }
 
 /* Keyboard styling */
@@ -55,6 +56,16 @@ canvas {
     padding: 10px;
     max-width: 100%; /* Ensure buttons are responsive */
     box-sizing: border-box; /* Include padding in the element's total width and height */
+    margin: 5px; /* Add margin for better spacing between buttons */
+    border: 1px solid #ccc; /* Add a border for better visibility */
+    border-radius: 5px; /* Rounded corners for buttons */
+    background-color: #fff; /* White background for buttons */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+#keyboard button:hover {
+    background-color: #e0e0e0; /* Light grey background on hover */
 }
 
 
