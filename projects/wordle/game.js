@@ -24379,13 +24379,26 @@ function drawKeyboard() {
       keyboard.forEach(row => {
           const rowDiv = document.createElement("div");
           rowDiv.style.display = "flex";
+          rowDiv.style.justifyContent = "center"; // Center the row horizontally
+          rowDiv.style.width = "100%"; // Ensure full width
+  
           row.forEach(key => {
               const keyBtn = document.createElement("button");
               keyBtn.textContent = key;
-              keyBtn.classList.add(key === "ENTER" || key === "DELETE" ? "special-key" : "normal-key");
+  
+              // Use correct template literals with backticks
+              keyBtn.style.width = key === "ENTER" || key === "DELETE" ? `${KEY_WIDTH * 4}px` : `${KEY_WIDTH}px`;
+              keyBtn.style.height = `${KEY_HEIGHT}px`;
+              keyBtn.style.margin = `${KEY_YSEP}px ${KEY_XSEP}px`;
+              
+              // Set initial key colors
+              keyBtn.style.backgroundColor = keyColors[key.toLowerCase()] || "lightgray";
+  
               keyBtn.onclick = () => handleKeyPress(key);
+  
               rowDiv.appendChild(keyBtn);
           });
+  
           keyboardDiv.appendChild(rowDiv);
       });
   }
