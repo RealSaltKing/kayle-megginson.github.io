@@ -9,8 +9,8 @@
     text-align: center; /* Align items inside the container */
     padding: 10px; /* Add padding for better spacing on mobile */
     box-sizing: border-box; /* Include padding in the element's total width and height */
-    padding-left: 5%; /* Add padding for better visibility on mobile */
-    padding-right: 5%; /* Add padding for better visibility on mobile */
+    padding-left: 10%; /* Increase padding for better visibility on mobile */
+    padding-right: 10%; /* Increase padding for better visibility on mobile */
     overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
@@ -35,8 +35,8 @@ canvas {
     padding: 10px; /* Add padding for better spacing on mobile */
     box-sizing: border-box; /* Include padding in the element's total width and height */
     overflow: hidden; /* Prevent content from overflowing */
-    padding-left: 5%; /* Add padding for better visibility on mobile */
-    padding-right: 5%; /* Add padding for better visibility on mobile */
+    padding-left: 10%; /* Increase padding for better visibility on mobile */
+    padding-right: 10%; /* Increase padding for better visibility on mobile */
 }
 
 /* Keyboard styling */
