@@ -6,10 +6,12 @@
     flex-direction: column;
     min-height: 100vh; /* Ensure container takes full height */
     width: 100%; /* Ensure the container stretches to the full width */
+    max-width: 100%; /* Prevent content from exceeding the screen width */
     text-align: center; /* Align items inside the container */
     padding: 10px; /* Add padding for better spacing */
     box-sizing: border-box; /* Include padding in the element's total width and height */
     overflow-x: hidden; /* Prevent horizontal overflow */
+    margin: 0 auto; /* Ensure the container is centered */
 }
 
 /* Center the canvas properly */
@@ -104,8 +106,8 @@ body {
 @media only screen and (max-width: 768px) {
     /* Reduce padding on smaller screens */
     #game {
-        padding-left: 5%; 
-        padding-right: 5%; 
+        padding-left: 5%;
+        padding-right: 5%;
     }
 
     /* Adjust font size and button width for smaller screens */
@@ -136,8 +138,8 @@ body {
 @media only screen and (max-width: 480px) {
     /* Further reduce padding on very small screens */
     #game {
-        padding-left: 3%; 
-        padding-right: 3%; 
+        padding-left: 2%;
+        padding-right: 2%;
     }
 
     /* Reduce button size further on very small screens */
