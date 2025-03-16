@@ -149,6 +149,20 @@ canvas.addEventListener("mousemove", event => {
     paddle.x = Math.max(0, Math.min(x, GWINDOW_WIDTH - paddle.width));
 });
 
+canvas.addEventListener("mousedown", event => {
+    let rect = canvas.getBoundingClientRect();
+    let x = event.clientX - rect.left - paddle.width / 2;
+    paddle.x = Math.max(0, Math.min(x, GWINDOW_WIDTH - paddle.width));
+});
+
+canvas.addEventListener("touchmove", event => {
+    let rect = canvas.getBoundingClientRect();
+    let touch = event.touches[0];
+    let x = touch.clientX - rect.left - paddle.width / 2;
+    paddle.x = Math.max(0, Math.min(x, GWINDOW_WIDTH - paddle.width));
+    event.preventDefault();
+});
+
 canvas.addEventListener("click", () => {
     if (!ballMoving) ballMoving = true;
 });
