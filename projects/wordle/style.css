@@ -104,10 +104,10 @@ body {
 
 /* Mobile and small screen adjustments */
 @media only screen and (max-width: 768px) {
-    /* Reduce padding on smaller screens */
+    /* Increase padding on mobile to prevent cutting off */
     #game {
-        padding-left: 5%;
-        padding-right: 5%;
+        padding-left: 15%; /* Increased padding */
+        padding-right: 15%; /* Increased padding */
     }
 
     /* Adjust font size and button width for smaller screens */
@@ -118,7 +118,7 @@ body {
 
     /* Adjust canvas scaling */
     canvas {
-        max-width: 95%; /* Ensure canvas doesn't overflow */
+        max-width: 90%; /* Ensure canvas doesn't overflow */
         height: auto; /* Maintain aspect ratio */
     }
 
@@ -136,10 +136,10 @@ body {
 }
 
 @media only screen and (max-width: 480px) {
-    /* Further reduce padding on very small screens */
+    /* Further increase padding on very small screens */
     #game {
-        padding-left: 2%;
-        padding-right: 2%;
+        padding-left: 20%; /* Even more padding for very small screens */
+        padding-right: 20%; /* Even more padding for very small screens */
     }
 
     /* Reduce button size further on very small screens */
