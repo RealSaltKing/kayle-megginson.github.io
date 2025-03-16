@@ -7,10 +7,8 @@
     min-height: 100vh; /* Ensure container takes full height */
     width: 100%; /* Ensure the container stretches to the full width */
     text-align: center; /* Align items inside the container */
-    padding: 10px; /* Add padding for better spacing on mobile */
+    padding: 10px; /* Add padding for better spacing */
     box-sizing: border-box; /* Include padding in the element's total width and height */
-    padding-left: 10%; /* Increase padding for better visibility on mobile */
-    padding-right: 10%; /* Increase padding for better visibility on mobile */
     overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
@@ -18,25 +16,9 @@
 canvas {
     display: block;
     margin: 0 auto;
-    /* Remove the border */
     border: none;
     max-width: 100%; /* Ensure canvas is responsive */
     height: auto; /* Maintain aspect ratio */
-}
-
-/* Center the grid inside the canvas */
-#game {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center items horizontally */
-    justify-content: center; /* Center items vertically */
-    min-height: 100vh;
-    width: 100%;
-    padding: 10px; /* Add padding for better spacing on mobile */
-    box-sizing: border-box; /* Include padding in the element's total width and height */
-    overflow: hidden; /* Prevent content from overflowing */
-    padding-left: 10%; /* Increase padding for better visibility on mobile */
-    padding-right: 10%; /* Increase padding for better visibility on mobile */
 }
 
 /* Keyboard styling */
@@ -47,7 +29,7 @@ canvas {
     margin-top: 10px; /* Adjusted for better spacing */
     width: 100%; /* Ensure keyboard is responsive */
     box-sizing: border-box; /* Include padding in the element's total width and height */
-    padding: 10px; /* Add padding for better spacing on mobile */
+    padding: 10px; /* Add padding for better spacing */
 }
 
 /* Style for buttons inside the keyboard */
@@ -67,8 +49,6 @@ canvas {
 #keyboard button:hover {
     background-color: #e0e0e0; /* Light grey background on hover */
 }
-
-
 
 /* Special Button Style */
 .special-button {
@@ -118,4 +98,56 @@ body {
     align-items: center;
     height: 100vh; /* Ensure body fills the full viewport height */
     background-color: #f0f0f0; /* Optional: Background color */
+}
+
+/* Mobile and small screen adjustments */
+@media only screen and (max-width: 768px) {
+    /* Reduce padding on smaller screens */
+    #game {
+        padding-left: 5%; 
+        padding-right: 5%; 
+    }
+
+    /* Adjust font size and button width for smaller screens */
+    #keyboard button {
+        font-size: 16px; /* Smaller font size on mobile */
+        padding: 8px; /* Smaller padding for buttons */
+    }
+
+    /* Adjust canvas scaling */
+    canvas {
+        max-width: 95%; /* Ensure canvas doesn't overflow */
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    /* Adjust control button spacing */
+    #controls {
+        flex-direction: column; /* Stack control buttons vertically */
+        margin-top: 10px; /* Reduced margin */
+    }
+
+    /* Adjust special button styling */
+    .special-button {
+        font-size: 14px; /* Smaller font size for special buttons */
+        padding: 8px 15px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    /* Further reduce padding on very small screens */
+    #game {
+        padding-left: 3%; 
+        padding-right: 3%; 
+    }
+
+    /* Reduce button size further on very small screens */
+    #keyboard button {
+        font-size: 14px; /* Even smaller font size */
+        padding: 6px; /* Even smaller padding */
+    }
+
+    .special-button {
+        font-size: 12px; /* Further reduce special button font size */
+        padding: 6px 12px;
+    }
 }
