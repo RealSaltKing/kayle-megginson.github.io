@@ -5,38 +5,29 @@
     align-items: center;
     flex-direction: column;
     min-height: 100vh; /* Ensure container takes full height */
-    width: 100%; /* Ensure the container stretches to the full width */
+    width: 100vw; /* Ensure the container stretches to the full width */
     text-align: center; /* Align items inside the container */
     padding: 10px; /* Add padding for better spacing on mobile */
     box-sizing: border-box; /* Include padding in the element's total width and height */
-    overflow-x: hidden; /* Prevent horizontal overflow */
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
 }
-/* Add padding to the left and right sides of the screen */
-body {
-    padding-left: 20px;
-    padding-right: 20px;
+
+/* Ensure the word grid scales properly */
+#word-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    max-width: 600px; /* Prevent grid from getting too wide on large screens */
+    width: 100%; /* Make grid responsive */
 }
-/* Center the canvas properly */
+
+/* Ensure the canvas adapts */
 canvas {
     display: block;
     margin: 0 auto;
-    /* Remove the border */
     border: none;
     max-width: 100%; /* Ensure canvas is responsive */
     height: auto; /* Maintain aspect ratio */
-}
-
-/* Center the grid inside the canvas */
-#game {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center items horizontally */
-    justify-content: center; /* Center items vertically */
-    min-height: 100vh;
-    width: 100%;
-    padding: 10px; /* Add padding for better spacing on mobile */
-    box-sizing: border-box; /* Include padding in the element's total width and height */
-    overflow: hidden; /* Prevent content from overflowing */
 }
 
 /* Keyboard styling */
@@ -47,30 +38,30 @@ canvas {
     margin-top: 10px; /* Adjusted for better spacing */
     width: 100%; /* Ensure keyboard is responsive */
     box-sizing: border-box; /* Include padding in the element's total width and height */
-    padding: 10px; /* Add padding for better spacing on mobile */
+    padding: 10px;
 }
 
-/* Style for buttons inside the keyboard */
+/* Ensure keyboard buttons adjust properly */
 #keyboard button {
     font-size: 20px;
     padding: 10px;
-    max-width: 100%; /* Ensure buttons are responsive */
-    box-sizing: border-box; /* Include padding in the element's total width and height */
-    margin: 5px; /* Add margin for better spacing between buttons */
-    border: 1px solid #ccc; /* Add a border for better visibility */
-    border-radius: 5px; /* Rounded corners for buttons */
-    background-color: #fff; /* White background for buttons */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s ease; /* Smooth transition for background color */
+    width: 8vw; /* Make buttons flexible */
+    max-width: 60px; /* Prevents buttons from getting too large */
+    min-width: 40px; /* Prevents them from getting too small */
+    box-sizing: border-box;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 #keyboard button:hover {
-    background-color: #e0e0e0; /* Light grey background on hover */
+    background-color: #e0e0e0;
 }
 
-
-
-/* Special Button Style */
+/* Control buttons */
 .special-button {
     font-family: Arial, sans-serif;
     font-size: 16px;
@@ -82,9 +73,8 @@ canvas {
     transition: background-color 0.3s ease;
 }
 
-/* Back to Main Button */
 #backToMain {
-    background-color: #4CAF50; /* Green */
+    background-color: #4CAF50;
     color: white;
 }
 
@@ -92,9 +82,8 @@ canvas {
     background-color: #45a049;
 }
 
-/* Reset Game Button */
 #resetGame {
-    background-color: #f44336; /* Red */
+    background-color: #f44336;
     color: white;
 }
 
@@ -107,15 +96,41 @@ canvas {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-top: 20px; /* Space between the game and buttons */
+    margin-top: 20px;
 }
 
-/* Optional: For better styling, can add background color to body or game container */
+/* Ensure body fills the viewport */
 body {
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Ensure body fills the full viewport height */
-    background-color: #f0f0f0; /* Optional: Background color */
+    height: 100vh;
+    background-color: #f0f0f0;
+    overflow-x: auto; /* Allow scrolling on smaller screens */
+}
+
+/* Mobile-specific fixes */
+@media only screen and (max-width: 768px) {
+    #game {
+        padding-left: 5vw;
+        padding-right: 5vw;
+    }
+
+    #keyboard {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    #keyboard button {
+        font-size: 18px;
+        padding: 8px;
+        width: 9vw;
+        max-width: 50px;
+    }
+
+    #word-grid {
+        width: 90vw; /* Make sure it stretches on mobile */
+        max-width: none; /* Allow flexibility */
+    }
 }
