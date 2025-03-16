@@ -26,12 +26,16 @@ canvas.width = BOARD_WIDTH;
 canvas.height = BOARD_HEIGHT;
 
 // Helper Functions
-function drawGrid() {
+function drawGrid(colors = []) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous board
+
     for (let row = 0; row < N_ROWS; row++) {
         for (let col = 0; col < N_COLS; col++) {
             const x = col * (SQUARE_SIZE + SQUARE_SEP);
             const y = row * (SQUARE_SIZE + SQUARE_SEP);
-            ctx.fillStyle = UNKNOWN_COLOR;
+            const color = (colors[row] && colors[row][col]) || UNKNOWN_COLOR;
+
+            ctx.fillStyle = color;
             ctx.fillRect(x, y, SQUARE_SIZE, SQUARE_SIZE);
             ctx.strokeStyle = "black";
             ctx.strokeRect(x, y, SQUARE_SIZE, SQUARE_SIZE);
@@ -92,15 +96,17 @@ function handleKeyPress(key) {
     if (key === "ENTER") {
         if (typedWord.length === 5 && ENGLISH_WORDS.includes(typedWord)) {
             const colors = checkWord(typedWord, selectedWord);
-            drawGrid(colors);
+            guessHistory[currentRow] = colors;
+            drawGrid(guessHistory); // Update the board
+
             if (typedWord === selectedWord) {
-                alert("Congratulations! You guessed the word!");
+                setTimeout(() => alert("Congratulations! You guessed the word!"), 200);
             } else {
                 typedWord = "";
                 currentRow++;
                 currentCol = 0;
                 if (currentRow >= N_ROWS) {
-                    alert(`Game Over! The word was ${selectedWord}`);
+                    setTimeout(() => alert(`Game Over! The word was ${selectedWord}`), 200);
                 }
             }
         } else {
@@ -108,10 +114,14 @@ function handleKeyPress(key) {
         }
     } else if (key === "DELETE") {
         typedWord = typedWord.slice(0, -1);
+        drawGrid(guessHistory); // Update board when deleting
     } else if (typedWord.length < 5) {
         typedWord += key.toLowerCase();
+        drawGrid(guessHistory); // Show updated board
     }
 }
+
+let guessHistory = Array.from({ length: N_ROWS }, () => Array(N_COLS).fill(UNKNOWN_COLOR));
 
 // Initialize
 drawGrid();
