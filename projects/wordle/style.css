@@ -41,6 +41,24 @@ canvas {
     padding: 10px;
 }
 
+/* Responsive design for mobile devices */
+@media (max-width: 768px) {
+    #game {
+        height: auto; /* Adjust height for mobile */
+        width: 100%; /* Ensure the container stretches to the full width */
+        padding: 20px; /* Add some padding */
+    }
+
+    #keyboard {
+        margin-top: 20px; /* Adjust margin for better spacing on mobile */
+    }
+
+    #keyboard button {
+        font-size: 16px; /* Adjust font size for mobile */
+        padding: 8px; /* Adjust padding for mobile */
+    }
+}
+
 /* Special Button Style */
 .special-button {
     font-family: Arial, sans-serif;
