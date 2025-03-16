@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wordle Game</title>
-    <link rel="stylesheet" href="style.css">
-</head>
 <body>
-    <h1>Wordle Game</h1>
-    <canvas id="gameCanvas"></canvas>
-    <div id="keyboard"></div>
+    <div class="header">
+        <h1>Wordle Game</h1>
+    </div>
+    <div id="game">
+        <canvas id="gameCanvas"></canvas>
+        <div id="keyboard"></div>
+    </div>
     <button id="backToMain" onclick="window.location.href='https://realsaltking.github.io/kayle-megginson.github.io/'">Back to Portfolio</button>
-    <button id="resetGame" onclick="window.location.href='https://realsaltking.github.io/kayle-megginson.github.io/projects/wordle/index.html'">Reset Game</button>
+    <button id="resetGame" onclick="window.location.href='index.html'">Reset Game</button>
     <script src="game.js"></script>
 </body>
-</html>
