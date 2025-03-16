@@ -4,9 +4,11 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh; /* Ensure container takes full height */
+    min-height: 100vh; /* Ensure container takes full height */
     width: 100%; /* Ensure the container stretches to the full width */
     text-align: center; /* Align items inside the container */
+    padding: 10px; /* Add padding for better spacing on mobile */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
 }
 
 /* Center the canvas properly */
@@ -15,6 +17,8 @@ canvas {
     margin: 0 auto;
     /* Remove the border */
     border: none;
+    max-width: 100%; /* Ensure canvas is responsive */
+    height: auto; /* Maintain aspect ratio */
 }
 
 /* Center the grid inside the canvas */
@@ -23,7 +27,7 @@ canvas {
     flex-direction: column;
     align-items: center; /* Center items horizontally */
     justify-content: center; /* Center items vertically */
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
 }
 
@@ -33,31 +37,19 @@ canvas {
     flex-direction: column;
     align-items: center;
     margin-top: -150px; /* Adjusted upward for better spacing */
+    width: 100%; /* Ensure keyboard is responsive */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
 }
 
 /* Style for buttons inside the keyboard */
 #keyboard button {
     font-size: 20px;
     padding: 10px;
+    max-width: 100%; /* Ensure buttons are responsive */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
 }
 
-/* Responsive design for mobile devices */
-@media (max-width: 768px) {
-    #game {
-        height: auto; /* Adjust height for mobile */
-        width: 100%; /* Ensure the container stretches to the full width */
-        padding: 20px; /* Add some padding */
-    }
 
-    #keyboard {
-        margin-top: 20px; /* Adjust margin for better spacing on mobile */
-    }
-
-    #keyboard button {
-        font-size: 16px; /* Adjust font size for mobile */
-        padding: 8px; /* Adjust padding for mobile */
-    }
-}
 
 /* Special Button Style */
 .special-button {
