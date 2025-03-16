@@ -1,24 +1,52 @@
-/* Center the title in the header */
-.header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100px;
-    background-color: #f3f3f3;
-}
-
-h1 {
-    margin: 0;
-    font-family: 'Helvetica Neue', sans-serif;
-    font-size: 40px;
-    color: #333;
-}
-
 /* Center the game container */
 #game {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    height: 100vh; /* Ensure container takes full height */
+    width: 100%; /* Ensure the container stretches to the full width */
+    text-align: center; /* Align items inside the container */
+}
+
+/* Center the canvas properly */
+canvas {
+    display: block;
+    margin: 0 auto;
+    /* Remove the border */
+    border: none;
+}
+
+/* Center the grid inside the canvas */
+#game {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
     height: 100vh;
+    width: 100vw;
+}
+
+/* Keyboard styling */
+#keyboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -200px; /* Add a margin between the game grid and the keyboard */
+}
+
+/* Style for buttons inside the keyboard */
+button {
+    font-size: 20px;
+    padding: 10px;
+}
+
+/* Optional: For better styling, can add background color to body or game container */
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ensure body fills the full viewport height */
+    background-color: #f0f0f0; /* Optional: Background color */
 }

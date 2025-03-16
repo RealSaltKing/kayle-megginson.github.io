@@ -7,11 +7,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Wordle Game</h1>
-    <canvas id="gameCanvas"></canvas>
-    <div id="keyboard"></div>
-    <button id="backToMain" onclick="window.location.href='https://realsaltking.github.io/kayle-megginson.github.io/'">Back to Portfolio</button>
-    <button id="resetGame" onclick="window.location.href='https://realsaltking.github.io/kayle-megginson.github.io/projects/wordle/index.html'">Reset Game</button>
+    <div id="game"> <!-- Add this wrapper div for centering -->
+        <canvas id="gameCanvas"></canvas>
+        <div id="keyboard"></div>
+        <button id="backToMain" onclick="window.location.href='https://realsaltking.github.io/kayle-megginson.github.io/'">Back to Portfolio</specialButton>
+        <button id="resetGame" onclick="window.location.href='https://realsaltking.github.io/kayle-megginson.github.io/projects/wordle/index.html'">Reset Game</specialButton>    
+    </div>
     <script src="game.js"></script>
 </body>
 </html>
