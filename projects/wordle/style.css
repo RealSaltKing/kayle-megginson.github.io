@@ -32,13 +32,53 @@ canvas {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: -200px; /* Add a margin between the game grid and the keyboard */
+    margin-top: -150px; /* Adjusted upward for better spacing */
 }
 
 /* Style for buttons inside the keyboard */
-button {
+#keyboard button {
     font-size: 20px;
     padding: 10px;
+}
+
+/* Special Button Style */
+.special-button {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Back to Main Button */
+#backToMain {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+#backToMain:hover {
+    background-color: #45a049;
+}
+
+/* Reset Game Button */
+#resetGame {
+    background-color: #f44336; /* Red */
+    color: white;
+}
+
+#resetGame:hover {
+    background-color: #e53935;
+}
+
+/* Center the control buttons */
+#controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px; /* Space between the game and buttons */
 }
 
 /* Optional: For better styling, can add background color to body or game container */
