@@ -40,12 +40,12 @@ canvas {
     padding: 10px;
 }
 
-/* Default styling for all keys */
+/* Default styling for all letter keys */
 #keyboard button {
     font-size: 20px;
     padding: 10px;
     width: 8vw; /* Adapt to screen width */
-    max-width: 60px; /* Prevents buttons from getting too large */
+    max-width: 50px; /* Prevents buttons from getting too large */
     min-width: 40px; /* Prevents them from getting too small */
     height: 50px;
     box-sizing: border-box;
@@ -59,15 +59,15 @@ canvas {
     white-space: nowrap; /* Prevents text from breaking */
 }
 
-/* Adjusting size for ENTER and DELETE */
-#keyboard button:nth-child(1), /* Target first button in row */
-#keyboard button:nth-child(9) { /* Target last button in row */
-    width: calc(8vw * 4); /* Makes it match the JS (4 times normal width) */
-    max-width: 160px; /* Prevents it from growing too large */
-    min-width: 100px; /* Prevents it from shrinking too much */
+/* ENTER and DELETE buttons - Slightly wider */
+#keyboard button.special-key {
+    width: 16vw; /* 4x normal button width */
+    max-width: 110px; /* Slightly smaller max width */
+    min-width: 80px; /* Prevents shrinking too much */
     font-size: 16px; /* Reduce font size slightly for better fit */
 }
 
+/* Button hover effect */
 #keyboard button:hover {
     background-color: #e0e0e0;
 }
@@ -138,6 +138,11 @@ body {
         padding: 8px;
         width: 9vw;
         max-width: 50px;
+    }
+
+    #keyboard button.special-key {
+        width: 20vw; /* Increase for better touch area */
+        max-width: 120px;
     }
 
     #word-grid {
