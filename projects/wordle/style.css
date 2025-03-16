@@ -28,7 +28,10 @@ canvas {
     align-items: center; /* Center items horizontally */
     justify-content: center; /* Center items vertically */
     min-height: 100vh;
-    width: 100vw;
+    width: 100%;
+    padding: 10px; /* Add padding for better spacing on mobile */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+    overflow: hidden; /* Prevent content from overflowing */
 }
 
 /* Keyboard styling */
@@ -36,9 +39,10 @@ canvas {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: -150px; /* Adjusted upward for better spacing */
+    margin-top: 10px; /* Adjusted for better spacing */
     width: 100%; /* Ensure keyboard is responsive */
     box-sizing: border-box; /* Include padding in the element's total width and height */
+    padding: 10px; /* Add padding for better spacing on mobile */
 }
 
 /* Style for buttons inside the keyboard */
