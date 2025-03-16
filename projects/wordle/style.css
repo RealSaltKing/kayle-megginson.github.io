@@ -4,12 +4,12 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    min-height: 100vh; /* Ensure container takes full height */
-    width: 100vw; /* Ensure the container stretches to the full width */
-    text-align: center; /* Align items inside the container */
-    padding: 10px; /* Add padding for better spacing on mobile */
-    box-sizing: border-box; /* Include padding in the element's total width and height */
-    overflow-x: auto; /* Allow horizontal scrolling if needed */
+    min-height: 100vh;
+    width: 100vw;
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow-x: auto;
 }
 
 /* Ensure the word grid scales properly */
@@ -17,8 +17,8 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 5px;
-    max-width: 600px; /* Prevent grid from getting too wide on large screens */
-    width: 100%; /* Make grid responsive */
+    max-width: 600px;
+    width: 100%;
 }
 
 /* Ensure the canvas adapts */
@@ -26,8 +26,8 @@ canvas {
     display: block;
     margin: 0 auto;
     border: none;
-    max-width: 100%; /* Ensure canvas is responsive */
-    height: auto; /* Maintain aspect ratio */
+    max-width: 100%;
+    height: auto;
 }
 
 /* Keyboard container */
@@ -35,6 +35,7 @@ canvas {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 100%;
     box-sizing: border-box;
     padding: 10px;
@@ -44,27 +45,43 @@ canvas {
 #keyboard button {
     font-size: 20px;
     padding: 10px;
-    width: 8vw; /* Adapt to screen width */
-    max-width: 50px; /* Prevents buttons from getting too large */
-    min-width: 40px; /* Prevents them from getting too small */
+    width: 8vw; /* Responsive */
+    max-width: 50px;
+    min-width: 40px;
     height: 50px;
     box-sizing: border-box;
     margin: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #fff;
+    background-color: lightgray; /* Default color */
     cursor: pointer;
     transition: background-color 0.3s ease;
     text-align: center;
-    white-space: nowrap; /* Prevents text from breaking */
+    white-space: nowrap;
 }
 
-/* ENTER and DELETE buttons - Slightly wider */
+/* ENTER and DELETE keys */
 #keyboard button.special-key {
-    width: 16vw; /* 4x normal button width */
-    max-width: 110px; /* Slightly smaller max width */
-    min-width: 80px; /* Prevents shrinking too much */
-    font-size: 16px; /* Reduce font size slightly for better fit */
+    width: 16vw;
+    max-width: 110px;
+    min-width: 80px;
+    font-size: 16px;
+}
+
+/* Color updates for guessed letters */
+.correct {
+    background-color: #6aaa64 !important; /* Green for correct position */
+    color: white;
+}
+
+.present {
+    background-color: #c9b458 !important; /* Yellow for present but wrong position */
+    color: white;
+}
+
+.absent {
+    background-color: #787c7e !important; /* Gray for not in word */
+    color: white;
 }
 
 /* Button hover effect */
@@ -118,7 +135,7 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #f0f0f0;
-    overflow-x: auto; /* Allow scrolling on smaller screens */
+    overflow-x: auto;
 }
 
 /* Mobile-specific fixes */
@@ -141,12 +158,12 @@ body {
     }
 
     #keyboard button.special-key {
-        width: 20vw; /* Increase for better touch area */
+        width: 20vw;
         max-width: 120px;
     }
 
     #word-grid {
-        width: 90vw; /* Make sure it stretches on mobile */
-        max-width: none; /* Allow flexibility */
+        width: 90vw;
+        max-width: none;
     }
 }
