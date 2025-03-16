@@ -30,24 +30,24 @@ canvas {
     height: auto; /* Maintain aspect ratio */
 }
 
-/* Keyboard styling */
+/* Keyboard container */
 #keyboard {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 10px; /* Adjusted for better spacing */
-    width: 100%; /* Ensure keyboard is responsive */
-    box-sizing: border-box; /* Include padding in the element's total width and height */
+    width: 100%;
+    box-sizing: border-box;
     padding: 10px;
 }
 
-/* Ensure keyboard buttons adjust properly */
+/* Default styling for all keys */
 #keyboard button {
     font-size: 20px;
     padding: 10px;
-    width: 8vw; /* Make buttons flexible */
+    width: 8vw; /* Adapt to screen width */
     max-width: 60px; /* Prevents buttons from getting too large */
     min-width: 40px; /* Prevents them from getting too small */
+    height: 50px;
     box-sizing: border-box;
     margin: 5px;
     border: 1px solid #ccc;
@@ -55,6 +55,17 @@ canvas {
     background-color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    text-align: center;
+    white-space: nowrap; /* Prevents text from breaking */
+}
+
+/* Adjusting size for ENTER and DELETE */
+#keyboard button:nth-child(1), /* Target first button in row */
+#keyboard button:nth-child(9) { /* Target last button in row */
+    width: calc(8vw * 4); /* Makes it match the JS (4 times normal width) */
+    max-width: 160px; /* Prevents it from growing too large */
+    min-width: 100px; /* Prevents it from shrinking too much */
+    font-size: 16px; /* Reduce font size slightly for better fit */
 }
 
 #keyboard button:hover {
