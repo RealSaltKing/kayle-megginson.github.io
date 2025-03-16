@@ -24382,7 +24382,7 @@ function drawKeyboard() {
         row.forEach(key => {
             const keyBtn = document.createElement("button");
             keyBtn.textContent = key;
-            keyBtn.style.width = key === "ENTER" || key === "DELETE" ? `${KEY_WIDTH * 2.5}px` : `${KEY_WIDTH}px`;
+            keyBtn.style.width = key === "ENTER" || key === "DELETE" ? `${KEY_WIDTH * 3}px` : `${KEY_WIDTH}px`;
             keyBtn.style.height = key === "ENTER" || key === "DELETE" ? `${KEY_HEIGHT * 1}px` : `${KEY_HEIGHT}px`;
             keyBtn.style.margin = `${KEY_YSEP}px ${KEY_XSEP}px`;
             keyBtn.style.backgroundColor = keyColors[key.toLowerCase()] || "lightgray";
