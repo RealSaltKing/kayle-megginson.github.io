@@ -25,9 +25,9 @@ canvas {
 
 /* Keyboard styling */
 #keyboard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 buttons per row */
+    gap: 8px; /* Space between buttons */
     margin-top: 10px; /* Adjusted for better spacing */
     width: 100%; /* Ensure keyboard is responsive */
     box-sizing: border-box; /* Include padding in the element's total width and height */
@@ -36,11 +36,10 @@ canvas {
 
 /* Style for buttons inside the keyboard */
 #keyboard button {
-    font-size: 20px;
-    padding: 10px;
+    font-size: 16px; /* Adjusted font size */
+    padding: 8px; /* Adjusted padding for smaller buttons */
     max-width: 100%; /* Ensure buttons are responsive */
     box-sizing: border-box; /* Include padding in the element's total width and height */
-    margin: 5px; /* Add margin for better spacing between buttons */
     border: 1px solid #ccc; /* Add a border for better visibility */
     border-radius: 5px; /* Rounded corners for buttons */
     background-color: #fff; /* White background for buttons */
@@ -55,8 +54,8 @@ canvas {
 /* Special Button Style */
 .special-button {
     font-family: Arial, sans-serif;
-    font-size: 16px;
-    padding: 10px 20px;
+    font-size: 14px; /* Adjusted font size */
+    padding: 8px 16px; /* Adjusted padding */
     margin: 10px;
     border: none;
     border-radius: 5px;
@@ -104,10 +103,10 @@ body {
 
 /* Mobile and small screen adjustments */
 @media only screen and (max-width: 768px) {
-    /* Increase padding on mobile to prevent cutting off */
-    #game {
-        padding-left: 15%; /* Increased padding */
-        padding-right: 15%; /* Increased padding */
+    /* Adjust keyboard layout to fit better on smaller screens */
+    #keyboard {
+        grid-template-columns: repeat(4, 1fr); /* 4 buttons per row for smaller screens */
+        gap: 6px; /* Reduced gap between buttons */
     }
 
     /* Adjust font size and button width for smaller screens */
@@ -136,10 +135,9 @@ body {
 }
 
 @media only screen and (max-width: 480px) {
-    /* Further increase padding on very small screens */
-    #game {
-        padding-left: 20%; /* Even more padding for very small screens */
-        padding-right: 20%; /* Even more padding for very small screens */
+    /* Further adjust layout for very small screens */
+    #keyboard {
+        grid-template-columns: repeat(3, 1fr); /* 3 buttons per row on very small screens */
     }
 
     /* Reduce button size further on very small screens */
