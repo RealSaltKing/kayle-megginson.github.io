@@ -112,8 +112,8 @@ body {
 
     /* Adjust font size and button width for smaller screens */
     #keyboard button {
-        font-size: 16px; /* Smaller font size on mobile */
-        padding: 8px; /* Smaller padding for buttons */
+        font-size: 14px; /* Smaller font size on mobile */
+        padding: 6px; /* Smaller padding for buttons */
     }
 
     /* Adjust canvas scaling */
@@ -130,8 +130,8 @@ body {
 
     /* Adjust special button styling */
     .special-button {
-        font-size: 14px; /* Smaller font size for special buttons */
-        padding: 8px 15px;
+        font-size: 12px; /* Smaller font size for special buttons */
+        padding: 6px 10px;
     }
 }
 
@@ -144,12 +144,12 @@ body {
 
     /* Reduce button size further on very small screens */
     #keyboard button {
-        font-size: 14px; /* Even smaller font size */
-        padding: 6px; /* Even smaller padding */
+        font-size: 12px; /* Even smaller font size */
+        padding: 4px; /* Even smaller padding */
     }
 
     .special-button {
-        font-size: 12px; /* Further reduce special button font size */
-        padding: 6px 12px;
+        font-size: 10px; /* Further reduce special button font size */
+        padding: 4px 8px;
     }
 }
