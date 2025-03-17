@@ -4,92 +4,55 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    min-height: 100vh;
-    width: 100vw;
-    text-align: center;
-    padding: 10px;
-    box-sizing: border-box;
-    overflow-x: auto;
+    min-height: 100vh; /* Ensure container takes full height */
+    width: 100%; /* Ensure the container stretches to the full width */
+    max-width: 100%; /* Prevent content from exceeding the screen width */
+    text-align: center; /* Align items inside the container */
+    padding: 10px; /* Add padding for better spacing */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+    overflow-x: hidden; /* Prevent horizontal overflow */
+    margin: 0 auto; /* Ensure the container is centered */
 }
 
-/* Ensure the word grid scales properly */
-#word-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 5px;
-    max-width: 600px;
-    width: 100%;
-}
-
-/* Ensure the canvas adapts */
+/* Center the canvas properly */
 canvas {
     display: block;
     margin: 0 auto;
     border: none;
-    max-width: 100%;
-    height: auto;
+    max-width: 100%; /* Ensure canvas is responsive */
+    height: auto; /* Maintain aspect ratio */
 }
 
-/* Keyboard container */
+/* Keyboard styling */
 #keyboard {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 10px;
+    margin-top: 10px; /* Adjusted for better spacing */
+    width: 100%; /* Ensure keyboard is responsive */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+    padding: 10px; /* Add padding for better spacing */
 }
 
-/* Default styling for all letter keys */
+/* Style for buttons inside the keyboard */
 #keyboard button {
     font-size: 20px;
     padding: 10px;
-    width: 8vw; /* Responsive */
-    max-width: 50px;
-    min-width: 40px;
-    height: 50px;
-    box-sizing: border-box;
-    margin: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: lightgray; /* Default color */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-align: center;
-    white-space: nowrap;
+    max-width: 100%; /* Ensure buttons are responsive */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+    margin: 5px; /* Add margin for better spacing between buttons */
+    border: 1px solid #ccc; /* Add a border for better visibility */
+    border-radius: 5px; /* Rounded corners for buttons */
+    background-color: #fff; /* White background for buttons */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
 }
 
-/* ENTER and DELETE keys */
-#keyboard button.special-key {
-    width: 16vw;
-    max-width: 110px;
-    min-width: 80px;
-    font-size: 16px;
-}
-
-/* Color updates for guessed letters */
-.correct {
-    background-color: #6aaa64 !important; /* Green for correct position */
-    color: white;
-}
-
-.present {
-    background-color: #c9b458 !important; /* Yellow for present but wrong position */
-    color: white;
-}
-
-.absent {
-    background-color: #787c7e !important; /* Gray for not in word */
-    color: white;
-}
-
-/* Button hover effect */
 #keyboard button:hover {
-    background-color: #e0e0e0;
+    background-color: #e0e0e0; /* Light grey background on hover */
 }
 
-/* Control buttons */
+/* Special Button Style */
 .special-button {
     font-family: Arial, sans-serif;
     font-size: 16px;
@@ -101,8 +64,9 @@ canvas {
     transition: background-color 0.3s ease;
 }
 
+/* Back to Main Button */
 #backToMain {
-    background-color: #4CAF50;
+    background-color: #4CAF50; /* Green */
     color: white;
 }
 
@@ -110,8 +74,9 @@ canvas {
     background-color: #45a049;
 }
 
+/* Reset Game Button */
 #resetGame {
-    background-color: #f44336;
+    background-color: #f44336; /* Red */
     color: white;
 }
 
@@ -124,46 +89,67 @@ canvas {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-top: 20px;
+    margin-top: 20px; /* Space between the game and buttons */
 }
 
-/* Ensure body fills the viewport */
+/* Optional: For better styling, can add background color to body or game container */
 body {
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-    overflow-x: auto;
+    height: 100vh; /* Ensure body fills the full viewport height */
+    background-color: #f0f0f0; /* Optional: Background color */
 }
 
-/* Mobile-specific fixes */
+/* Mobile and small screen adjustments */
 @media only screen and (max-width: 768px) {
+    /* Increase padding on mobile to prevent cutting off */
     #game {
-        padding-left: 5vw;
-        padding-right: 5vw;
+        padding-left: 15%; /* Increased padding */
+        padding-right: 15%; /* Increased padding */
     }
 
-    #keyboard {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
+    /* Adjust font size and button width for smaller screens */
     #keyboard button {
-        font-size: 18px;
-        padding: 8px;
-        width: 9vw;
-        max-width: 50px;
+        font-size: 16px; /* Smaller font size on mobile */
+        padding: 8px; /* Smaller padding for buttons */
     }
 
-    #keyboard button.special-key {
-        width: 20vw;
-        max-width: 120px;
+    /* Adjust canvas scaling */
+    canvas {
+        max-width: 90%; /* Ensure canvas doesn't overflow */
+        height: auto; /* Maintain aspect ratio */
     }
 
-    #word-grid {
-        width: 90vw;
-        max-width: none;
+    /* Adjust control button spacing */
+    #controls {
+        flex-direction: column; /* Stack control buttons vertically */
+        margin-top: 10px; /* Reduced margin */
+    }
+
+    /* Adjust special button styling */
+    .special-button {
+        font-size: 14px; /* Smaller font size for special buttons */
+        padding: 8px 15px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    /* Further increase padding on very small screens */
+    #game {
+        padding-left: 20%; /* Even more padding for very small screens */
+        padding-right: 20%; /* Even more padding for very small screens */
+    }
+
+    /* Reduce button size further on very small screens */
+    #keyboard button {
+        font-size: 14px; /* Even smaller font size */
+        padding: 6px; /* Even smaller padding */
+    }
+
+    .special-button {
+        font-size: 12px; /* Further reduce special button font size */
+        padding: 6px 12px;
     }
 }

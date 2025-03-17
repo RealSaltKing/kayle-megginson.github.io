@@ -24367,41 +24367,31 @@ function drawGrid(colors = [], letters = []) {
 
 
 function drawKeyboard() {
-      const keyboard = [
-          ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-          ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-          ["ENTER", "Z", "X", "C", "V", "B", "N", "M", "DELETE"]
-      ];
-  
-      const keyboardDiv = document.getElementById("keyboard");
-      keyboardDiv.innerHTML = "";
-  
-      keyboard.forEach(row => {
-          const rowDiv = document.createElement("div");
-          rowDiv.style.display = "flex";
-          rowDiv.style.justifyContent = "center"; // Center the row horizontally
-          rowDiv.style.width = "100%"; // Ensure full width
-  
-          row.forEach(key => {
-              const keyBtn = document.createElement("button");
-              keyBtn.textContent = key;
-  
-              // Use correct template literals with backticks
-              keyBtn.style.width = key === "ENTER" || key === "DELETE" ? `${KEY_WIDTH * 4}px` : `${KEY_WIDTH}px`;
-              keyBtn.style.height = `${KEY_HEIGHT}px`;
-              keyBtn.style.margin = `${KEY_YSEP}px ${KEY_XSEP}px`;
-              
-              // Set initial key colors
-              keyBtn.style.backgroundColor = keyColors[key.toLowerCase()] || "lightgray";
-  
-              keyBtn.onclick = () => handleKeyPress(key);
-  
-              rowDiv.appendChild(keyBtn);
-          });
-  
-          keyboardDiv.appendChild(rowDiv);
-      });
-  }
+    const keyboard = [
+        ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+        ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+        ["ENTER", "Z", "X", "C", "V", "B", "N", "M", "DELETE"]
+    ];
+
+    const keyboardDiv = document.getElementById("keyboard");
+    keyboardDiv.innerHTML = "";
+
+    keyboard.forEach(row => {
+        const rowDiv = document.createElement("div");
+        rowDiv.style.display = "flex";
+        row.forEach(key => {
+            const keyBtn = document.createElement("button");
+            keyBtn.textContent = key;
+            keyBtn.style.width = key === "ENTER" || key === "DELETE" ? `${KEY_WIDTH * 2.5}px` : `${KEY_WIDTH}px`;
+            keyBtn.style.height = key === "ENTER" || key === "DELETE" ? `${KEY_HEIGHT * 1}px` : `${KEY_HEIGHT}px`;
+            keyBtn.style.margin = `${KEY_YSEP}px ${KEY_XSEP}px`;
+            keyBtn.style.backgroundColor = keyColors[key.toLowerCase()] || "lightgray";
+            keyBtn.onclick = () => handleKeyPress(key);
+            rowDiv.appendChild(keyBtn);
+        });
+        keyboardDiv.appendChild(rowDiv);
+    });
+}
 
 function getRandomWord() {
     // Filter words to only include those with exactly 5 characters
