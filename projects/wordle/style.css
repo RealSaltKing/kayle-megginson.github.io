@@ -28,7 +28,7 @@ canvas {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 10px; /* Adjusted for better spacing */
+    margin-top: -150px; /* Adjusted for better spacing */
     width: 100%; /* Ensure keyboard is responsive */
     box-sizing: border-box; /* Include padding in the element's total width and height */
     padding: 10px; /* Add padding for better spacing */
