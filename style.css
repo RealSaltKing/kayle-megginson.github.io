@@ -563,25 +563,13 @@ p {
   position: relative;
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(220px, 1fr);
-  gap: 0;
+  grid-auto-columns: minmax(236px, 1fr);
+  gap: 0.55rem;
   align-items: center;
   overflow-x: auto;
-  padding: 1.6rem 0.25rem 1rem;
+  padding: 1.6rem 0.7rem 1rem;
   scrollbar-width: thin;
   scrollbar-color: rgba(114, 224, 255, 0.34) transparent;
-}
-
-.journey-timeline::before {
-  content: "";
-  position: absolute;
-  left: 0.25rem;
-  right: 0.25rem;
-  top: 50%;
-  height: 2px;
-  transform: translateY(-50%);
-  background: linear-gradient(90deg, rgba(114, 224, 255, 0.16), rgba(142, 247, 181, 0.3), rgba(114, 224, 255, 0.16));
-  pointer-events: none;
 }
 
 .journey-timeline::-webkit-scrollbar {
@@ -598,12 +586,54 @@ p {
   z-index: 1;
   display: grid;
   grid-template-rows: minmax(124px, auto) 42px 76px 42px minmax(124px, auto);
-  min-width: 220px;
+  min-width: 236px;
   padding: 0 0.35rem;
+  margin-left: -12px;
+}
+
+.journey-event:first-child {
+  margin-left: 0;
+}
+
+.journey-event::after {
+  content: "";
+  position: absolute;
+  left: calc(-0.55rem - 12px);
+  right: calc(-0.55rem - 12px);
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, rgba(114, 224, 255, 0.16), rgba(142, 247, 181, 0.3), rgba(114, 224, 255, 0.16));
+  z-index: 0;
+  pointer-events: none;
+}
+
+.journey-event:first-child::after {
+  left: 50%;
+}
+
+.journey-event:last-child::after {
+  right: -0.7rem;
+}
+
+.journey-event::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  border: 3px solid rgba(6, 18, 31, 0.95);
+  background: linear-gradient(135deg, rgba(142, 247, 181, 0.95), rgba(114, 224, 255, 0.95));
+  box-shadow: 0 0 0 7px rgba(114, 224, 255, 0.08);
+  z-index: 2;
 }
 
 .journey-note {
   position: relative;
+  z-index: 1;
   padding: 1rem 1.05rem;
   border-radius: 22px;
   border: 1px solid rgba(114, 224, 255, 0.12);
@@ -636,19 +666,17 @@ p {
   justify-self: center;
   width: 2px;
   background: linear-gradient(180deg, rgba(142, 247, 181, 0.5), rgba(114, 224, 255, 0.34));
+  z-index: 0;
 }
 
 .journey-stem::after {
   content: "";
   position: absolute;
   left: 50%;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
+  width: 2px;
   transform: translateX(-50%);
-  border: 3px solid rgba(6, 18, 31, 0.95);
-  background: linear-gradient(135deg, rgba(142, 247, 181, 0.95), rgba(114, 224, 255, 0.95));
-  box-shadow: 0 0 0 7px rgba(114, 224, 255, 0.08);
+  background: linear-gradient(180deg, rgba(142, 247, 181, 0.5), rgba(114, 224, 255, 0.34));
+  z-index: 0;
 }
 
 .journey-event:nth-child(odd) .journey-stem {
@@ -658,8 +686,8 @@ p {
 }
 
 .journey-event:nth-child(odd) .journey-stem::after {
-  bottom: 100%;
-  margin-bottom: 6px;
+  top: 100%;
+  height: 14px;
 }
 
 .journey-event:nth-child(even) .journey-stem {
@@ -669,8 +697,8 @@ p {
 }
 
 .journey-event:nth-child(even) .journey-stem::after {
-  top: 100%;
-  margin-top: 6px;
+  bottom: 100%;
+  height: 14px;
 }
 
 .journey-step {
@@ -678,6 +706,7 @@ p {
   grid-row: 3;
   display: grid;
   place-items: center;
+  z-index: 1;
   min-height: 76px;
   padding: 1rem 2.2rem 1rem 1.7rem;
   color: var(--heading);
@@ -1121,19 +1150,38 @@ p {
     padding: 1.2rem;
   }
 
-  .journey-timeline::before {
-    top: auto;
-    bottom: 0.85rem;
-    left: 0.25rem;
-    right: 0.25rem;
-    transform: none;
-  }
-
   .journey-event {
     grid-auto-columns: auto;
     grid-template-rows: auto 28px 68px 1fr;
     min-width: min(82vw, 270px);
     gap: 0.65rem;
+    margin-left: -8px;
+  }
+
+  .journey-event:first-child {
+    margin-left: 0;
+  }
+
+  .journey-event::after {
+    left: calc(-0.55rem - 10px);
+    right: calc(-0.55rem - 10px);
+    top: auto;
+    bottom: 0.85rem;
+    transform: none;
+  }
+
+  .journey-event:first-child::after {
+    left: 50%;
+  }
+
+  .journey-event:last-child::after {
+    right: 0;
+  }
+
+  .journey-event::before {
+    top: auto;
+    bottom: 0.85rem;
+    transform: translateX(-50%);
   }
 
   .journey-note,
@@ -1153,9 +1201,10 @@ p {
 
   .journey-event:nth-child(odd) .journey-stem::after,
   .journey-event:nth-child(even) .journey-stem::after {
-    top: auto;
-    bottom: 100%;
-    margin: 0 0 6px;
+    top: 100%;
+    bottom: auto;
+    height: 8px;
+    margin: 0;
   }
 
   .journey-step {
