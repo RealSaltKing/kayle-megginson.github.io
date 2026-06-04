@@ -1,0 +1,41 @@
+ME 522 Final Project - User-Supplied Test Statistics
+
+Course-provided spring stiffness:
+k = 106.6 N/m per printed modular spring
+
+1-DOF Stats:
+m1 = 30.4 g
+Sampling Rate = 84.71 Hz
+Peak Count Frequency = 11.012 Hz
+Log Decrement = 0.30120
+Damping Ratio = 0.04788
+FFT Natural Frequency = 8.466 Hz
+
+1-DOF Theory using m1 = 30.4 g:
+f_n = (1 / 2*pi) * sqrt(k / m1) = 9.425 Hz
+f_d = f_n * sqrt(1 - zeta^2) = 9.414 Hz
+Peak-count difference from f_n = +16.84 percent
+FFT difference from f_n = -10.17 percent
+
+2-DOF Stats:
+m1 = 30.4 g
+m2 = 10.1 g
+Sampling Rate = 84.71 Hz
+Peak Count Frequency = 11.012 Hz
+Log Decrement = 0.30120
+Damping Ratio = 0.04788
+FFT Natural Frequency = 8.466 Hz
+
+2-DOF Theory using k1 = k2 = 106.6 N/m:
+[M]{x_ddot} + [K]{x} = {0}
+M = [[m1, 0], [0, m2]]
+K = [[k1 + k2, -k2], [-k2, k2]]
+Natural frequencies from det(K - omega^2*M) = 0
+Theoretical Mode 1 = 7.874 Hz
+Theoretical Mode 2 = 19.570 Hz
+Mode 1 shape, normalized = [0.768, 1.000]
+Mode 2 shape, normalized = [0.433, -1.000]
+
+CAD/STL spring preview:
+STL triangles = 13,760
+Bounding span = 38.83 mm x 38.82 mm x 38.60 mm
