@@ -821,13 +821,11 @@
         </div>
       </div>
       <aside class="speaker-notes">
-        This presentation analyzes one-degree-of-freedom and two-degree-of-freedom spring systems.
+        Good morning, my name is Kayle Megginson, and today I am going to walk through my vibration analysis of a printed spring system in both a one-degree-of-freedom and two-degree-of-freedom setup.
 
-        The main idea is that theory predicts the structure of the response, but the experiment shows how the real hardware changes the exact numbers.
+        The main goal was not just to calculate a frequency and call it done. I wanted to see how well the ideal vibration models describe the real hardware once the spring, masses, sensors, wiring, and damping are all part of the test. So throughout the presentation, I will use the theory as the reference point, then compare it with what the accelerometer data actually showed.
 
-        For the 1-DOF system, I use the free-vibration model to estimate natural frequency and damping. For the 2-DOF system, I use a matrix eigenvalue model to predict multiple modes.
-
-        The central insight is that real systems include damping, sensor mass, wiring, tape, support compliance, and distributed spring mass, so the measured response is more complicated than the ideal model.
+        The big takeaway is that the model does a good job predicting the overall behavior, but the experimental results are more complicated in useful ways. Those differences help explain what is really happening in the physical system.
       </aside>
     </section>
 
@@ -872,13 +870,11 @@
         </div>
       </div>
       <aside class="speaker-notes">
-        This slide previews the analysis flow.
+        I organized the analysis so it follows the same path as the experiment. First I define the hardware and the measured quantities, then I build the mathematical model, and finally I compare the predictions with the data.
 
-        I start with the physical setup, then move into the theoretical model, then compare that model against the measured response.
+        For the single-spring case, I look at the natural frequency, the damped response, the peak-count estimate, and the FFT result. For the two-spring case, the problem changes from one equation into a matrix model, so the important results are the two modal frequencies and the mode shapes.
 
-        For the 1-DOF system, the main quantities are the theoretical natural frequency, the peak-count frequency, the FFT frequency, and the damping ratio from logarithmic decrement.
-
-        For the 2-DOF system, the important pieces are the mass and stiffness matrices, the eigenvalue calculation, the two theoretical frequencies, and the comparison to the measured response.
+        That structure makes the comparison easier, because every number in the results can be traced back either to a measured value or to a specific modeling assumption.
       </aside>
     </section>
 
@@ -956,17 +952,11 @@
         </div>
       </div>
       <aside class="speaker-notes">
-        The data acquisition hardware is built around the Arduino Nano and the GY-521 accelerometer modules.
+        The measurement setup was intentionally simple. I used an Arduino Nano to collect acceleration data from GY-521 sensor boards, then processed that signal later for the time response and frequency response.
 
-        The microcontroller is an Arduino Nano. The accelerometer modules are GY-521 boards, which contain the MPU-6050 accelerometer and gyroscope.
+        The sensors communicate over I2C, which is helpful because the two-degree-of-freedom setup can use two accelerometers on the same bus. One sensor stays at the default address, and the second one is shifted by changing the AD0 connection.
 
-        The photos show the actual Arduino board, the accelerometer modules, and the complete wiring setup used to collect the vibration data.
-
-        The wiring is I2C: VCC goes to 5 volts, ground goes to ground, SCL goes to A5, and SDA goes to A4.
-
-        For the two-degree-of-freedom test, two accelerometers can be used on the same I2C bus. The first one uses the default address, 0x68. The second one is changed to 0x69 by connecting the AD0 pin to 3.3 volts.
-
-        The printed modular spring uses the baseline stiffness value of 106.6 newtons per meter. The DC motor and lab power supplies are useful for forced-vibration extensions, but this analysis focuses on free vibration.
+        The key point here is that the hardware is part of the experiment, not just a way to record it. The sensor boards, wires, tape, and mounting method all add small physical effects, so I kept those in mind when interpreting differences between the model and the measurements.
       </aside>
     </section>
 
@@ -992,13 +982,11 @@
         </div>
       </div>
       <aside class="speaker-notes">
-        These are the two physical systems I tested.
+        These photos show the two test configurations. The first setup is the simpler case: one spring, one moving mass, and one main coordinate describing the motion.
 
-        The 1-DOF system is a single printed spring with one vibrating payload. I displaced the mass and let it vibrate freely.
+        The second setup adds another spring and another mass, which changes the behavior completely. Once the two masses can move relative to each other, the system can vibrate in different patterns instead of behaving like one isolated oscillator.
 
-        The 2-DOF system uses two springs in series and two masses. This creates coupled motion, so the response can contain more than one natural frequency.
-
-        The photos are important because they also show why the real system is not perfectly ideal: the sensor boards, wiring, tape, and fixtures all affect the measured response.
+        This is also where the physical details start to matter. The real setup includes mounted electronics and flexible connections, so the experiment is close to the model, but it is not a perfect textbook system.
       </aside>
     </section>
 
@@ -1060,15 +1048,11 @@
         </div>
       </div>
       <aside class="speaker-notes">
-        This slide lists the measured values used in the rest of the presentation.
+        Before comparing theory and experiment, I needed a consistent set of inputs. The spring stiffness used in the calculations was 106.6 newtons per meter, and the measured masses were 30.4 grams for the main payload and 10.1 grams for the second mass.
 
-        For the 1-DOF test, the mass is 30.4 grams, the sampling rate is 84.71 hertz, the peak-count frequency is 11.012 hertz, and the FFT natural frequency is 8.466 hertz.
+        The data was sampled at about 84.7 hertz, which sets the resolution for the recorded signal. From the single-degree-of-freedom response, I used two different frequency estimates: one from counting peaks in time and one from the FFT.
 
-        The logarithmic decrement is 0.30120, which corresponds to a damping ratio of 0.04788.
-
-        For the 2-DOF calculation, I use the same first mass plus a second mass of 10.1 grams.
-
-        The photos along the bottom document the measured masses, so the theoretical calculations are tied directly back to the physical test hardware.
+        I also calculated damping from logarithmic decrement. That gives a damping ratio of about 0.048, so the system is lightly damped. This will be important later because the damping correction changes the theoretical frequency only slightly.
       </aside>
     </section>
 
@@ -1118,15 +1102,11 @@
         </div>
       </div>
       <aside class="speaker-notes">
-        For the 1-DOF system, the governing equation is m x double dot plus c x dot plus k x equals zero.
+        For the one-degree-of-freedom model, I treated the setup as a mass, spring, and damper in free vibration. Using the measured mass and stiffness, the undamped natural frequency comes out to 9.425 hertz.
 
-        The theoretical natural frequency is omega n equals the square root of k over m. Substituting the measured values gives omega n equal to 59.216 radians per second.
+        Then I included damping using logarithmic decrement. Since the damping ratio is only about 0.048, the damped frequency drops only slightly, from 9.425 hertz to 9.414 hertz.
 
-        Converting that angular frequency to cycles per second by dividing by 2 pi gives 9.425 hertz.
-
-        I also used logarithmic decrement to compute damping. With delta equal to 0.30120, the damping ratio is 0.04788.
-
-        The damped frequency is 9.414 hertz, so the damping correction is small. That means damping is not enough by itself to explain why peak counting and FFT give different measured frequencies.
+        That small change is important. If the measured frequencies differ from theory by a larger amount, damping alone cannot be the full explanation. It means other real-hardware effects are also influencing the response.
       </aside>
     </section>
 
@@ -1157,15 +1137,11 @@
         </div>
       </div>
       <aside class="speaker-notes">
-        This graph compares the 1-DOF theoretical and measured frequency values.
+        Here is where the comparison becomes interesting. The peak-count method gives a higher frequency than the theoretical model, while the FFT gives a lower dominant frequency.
 
-        The theoretical natural frequency is 9.425 hertz and the damping-corrected frequency is 9.414 hertz.
+        I do not see that disagreement as a failure of the experiment. I see it as evidence that the two methods are looking at the response differently. Peak counting follows the visible oscillations in the time signal, while the FFT identifies the strongest frequency content over the full record.
 
-        The peak-count frequency is 11.012 hertz, which is about 16.84 percent higher than theory.
-
-        The FFT frequency is 8.466 hertz, which is about 10.17 percent lower than theory.
-
-        I interpret the difference as a sign that the real printed spring assembly has additional effects, including sensor mass, spring mass, and possible support compliance.
+        Since the real spring has distributed mass and the sensor adds inertia at the end, the response is not perfectly described by a single ideal coordinate. That is why the difference between the methods is useful instead of just being random error.
       </aside>
     </section>
 
@@ -1189,13 +1165,11 @@
         </div>
       </div>
       <aside class="speaker-notes">
-        These are the measured plots for the single-degree-of-freedom test.
+        These two plots are the evidence behind the 1-DOF measurements. On the left, the time response shows the decaying motion after release. That is the signal I used for peak counting and damping.
 
-        The time response shows the free vibration decay after the mass is released. This is where peak counting and logarithmic decrement come from.
+        On the right, the FFT turns the same motion into frequency content. This view is useful because the strongest frequency component is not always exactly what the eye follows in the time-domain plot.
 
-        The FFT plot shows the same response in the frequency domain, where the dominant spectral peak can be identified.
-
-        Using both plots is important because peak counting is simple and physical, while FFT analysis is better for seeing the actual frequency content of the recorded signal.
+        Looking at both views gives a more complete picture: the time plot shows how the motion dies out, and the FFT shows which frequency dominates the recorded signal.
       </aside>
     </section>
 
@@ -1258,17 +1232,13 @@
         </div>
       </div>
       <aside class="speaker-notes">
-        For the 2-DOF system, the equation becomes a matrix equation: M times x double dot plus K times x equals zero.
+        For the two-degree-of-freedom setup, the math has to account for both masses moving at the same time. Instead of one scalar equation, I used mass and stiffness matrices.
 
-        The mass matrix contains the two measured masses, 0.0304 kilograms and 0.0101 kilograms.
+        The stiffness matrix includes the coupling between the two coordinates. That coupling is the reason the system has two natural frequencies instead of one.
 
-        Since both springs use the baseline stiffness of 106.6 newtons per meter, the stiffness matrix has 213.2 in the first diagonal term, negative 106.6 coupling terms, and 106.6 in the second diagonal term.
+        Solving the eigenvalue problem gives a lower mode at 7.874 hertz and a higher mode at 19.570 hertz. The lower mode represents motion where the masses move mostly together, and the higher mode represents motion where they move against each other.
 
-        The natural frequencies come from the determinant of K minus omega squared M equals zero. Substituting the actual mass and stiffness values gives the determinant matrix with 213.2 minus 0.0304 omega squared in the first diagonal entry, 106.6 minus 0.0101 omega squared in the second diagonal entry, and negative 106.6 in the off-diagonal coupling terms.
-
-        Expanding that determinant gives 0.00030704 omega to the fourth, minus 5.39396 omega squared, plus 11363.56 equals zero.
-
-        Solving that polynomial gives omega one equal to 49.475 radians per second and omega two equal to 122.963 radians per second. Dividing by 2 pi gives a first mode at 7.874 hertz and a second mode at 19.570 hertz.
+        So before looking at the data, the model already predicts that the measured response should not be just one simple frequency. It should contain modal behavior.
       </aside>
     </section>
 
@@ -1292,13 +1262,11 @@
         </div>
       </div>
       <aside class="speaker-notes">
-        This slide shows the 2-DOF results.
+        When I compare the two-degree-of-freedom model with the measured FFT value, the measured frequency is closest to the first predicted mode.
 
-        The first plot compares the predicted first mode, the measured FFT frequency, and the predicted second mode.
+        That makes sense for a free-vibration test because the way the system is released can excite one mode more strongly than the other. The second mode is still part of the theoretical system, but it may not appear as strongly in the measured spectrum depending on the initial motion and sensor placement.
 
-        The FFT value of 8.466 hertz is closest to the first theoretical mode at 7.874 hertz.
-
-        The second plot shows the mode shapes. Mode 1 is mostly in phase, while Mode 2 is out of phase because the signs of the two mass amplitudes are opposite.
+        The mode-shape plot helps explain the difference between the two modes. In the first mode, the masses move mostly together. In the second mode, their motion has opposite signs, which means the masses move against each other.
       </aside>
     </section>
 
@@ -1322,13 +1290,11 @@
         </div>
       </div>
       <aside class="speaker-notes">
-        These plots show the experimental 2-DOF response.
+        The time response here shows why the 2-DOF system is more complex than the single-spring case. The motion of one mass affects the other, so the response is coupled instead of independent.
 
-        In the time-domain plot, both masses move because the equations of motion are coupled.
+        The FFT is useful because it separates that combined motion into frequency content. Even if the time signal looks messy, the frequency plot can still show which modes are being excited.
 
-        In the FFT plot, the goal is to identify the frequencies contained in that coupled response.
-
-        This is why two accelerometers are useful: one accelerometer can reveal frequencies, but two accelerometers help determine the relative motion and phase relationship that define the mode shapes.
+        Using two accelerometer channels also gives more information than a single sensor would. It helps connect the measured frequencies back to the relative motion between the two masses, which is what a mode shape represents.
       </aside>
     </section>
 
@@ -1363,15 +1329,13 @@
         </div>
       </div>
       <aside class="speaker-notes">
-        My final conclusion is that the experiment supports the vibration theory, but also shows the limits of the ideal model.
+        To close, the main result is that the theory predicted the overall behavior, but the experiment showed the limits of the ideal assumptions.
 
-        For the 1-DOF system, the theoretical natural frequency is 9.425 hertz. The peak-count value and FFT value do not match that exactly, which suggests that the real assembly is not a perfect single-degree-of-freedom oscillator.
+        In the 1-DOF case, the theoretical frequency landed between the two measured estimates. That tells me the model is useful, but the physical setup has effects that the simple lumped-parameter equation does not fully capture.
 
-        For the 2-DOF system, the eigenvalue model predicts two modes. The measured FFT statistic is closest to the lower mode, which is consistent with the idea that the transient response contains modal behavior.
+        In the 2-DOF case, the eigenvalue model predicted two modes, and the measured FFT value lined up most closely with the lower one. That supports the idea that the real response contains modal behavior, even though the hardware and measurement method affect what shows up most clearly.
 
-        The main sources of discrepancy are sensor mass, wiring, tape, support compliance, distributed spring mass, and the fact that peak counting and FFT measure the response in different ways.
-
-        Overall, theory gives the model, and experiment tells us how the real system behaves.
+        Overall, the experiment reinforced the value of the vibration model while also showing why real measurements matter. The equations explain the trend, and the hardware tells us what the system actually does.
       </aside>
     </section>
   </main>
