@@ -682,8 +682,7 @@
       gap: 9px;
     }
 
-    .deck-nav button,
-    .notes-toggle {
+    .deck-nav button {
       border: 1px solid var(--line);
       border-radius: 999px;
       min-width: 44px;
@@ -697,12 +696,6 @@
       font-size: 0.95rem;
       font-weight: 900;
       line-height: 1;
-    }
-
-    .notes-toggle {
-      min-width: 90px;
-      padding: 0 16px;
-      text-transform: uppercase;
     }
 
     .progress {
@@ -791,7 +784,6 @@
       }
 
       .deck-nav,
-      .notes-toggle,
       .notes-panel {
         display: none;
       }
@@ -1349,7 +1341,6 @@
     <button id="prevSlide" type="button" aria-label="Previous slide">Prev</button>
     <div class="progress" id="progress">1 / 12</div>
     <button id="nextSlide" type="button" aria-label="Next slide">Next</button>
-    <button id="notesToggle" class="notes-toggle" type="button">Notes</button>
   </nav>
 
   <script>
@@ -1357,7 +1348,6 @@
     const slides = Array.from(document.querySelectorAll(".slide"));
     const prevButton = document.getElementById("prevSlide");
     const nextButton = document.getElementById("nextSlide");
-    const notesToggle = document.getElementById("notesToggle");
     const progress = document.getElementById("progress");
     const notesTitle = document.getElementById("notesTitle");
     const notesText = document.getElementById("notesText");
@@ -1396,7 +1386,6 @@
 
     prevButton.addEventListener("click", () => goToSlide(current - 1));
     nextButton.addEventListener("click", () => goToSlide(current + 1));
-    notesToggle.addEventListener("click", () => document.body.classList.toggle("notes-open"));
     deck.addEventListener("scroll", () => window.requestAnimationFrame(updateProgress), { passive: true });
 
     document.addEventListener("keydown", (event) => {
@@ -1415,9 +1404,6 @@
       if (event.key === "End") {
         event.preventDefault();
         goToSlide(slides.length - 1);
-      }
-      if (event.key.toLowerCase() === "n") {
-        document.body.classList.toggle("notes-open");
       }
     });
 
