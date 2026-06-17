@@ -81,9 +81,9 @@
     if (!node) return;
 
     const values = [
-      "full-stack projects",
+      "software systems",
       "data-driven modeling",
-      "optimization problems",
+      "controls and dynamics",
       "technical storytelling",
       "engineering systems"
     ];
