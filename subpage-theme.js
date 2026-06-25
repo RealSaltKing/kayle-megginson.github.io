@@ -238,7 +238,7 @@
     var hero = document.createElement("section");
     hero.className = "subpage-hero";
     hero.innerHTML =
-      '<p class="subpage-kicker">Project Sandbox</p>' +
+      '<p class="subpage-kicker">Project Detail</p>' +
       '<h1 class="subpage-title">' + title + "</h1>" +
       '<p class="subpage-description">' + description + "</p>";
 
