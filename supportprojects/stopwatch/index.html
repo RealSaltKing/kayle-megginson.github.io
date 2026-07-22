@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>00:00:00.000</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Stopwatch</h1>
+
+    <div id="display">
+        00:00:00.000
+    </div>
+
+    <div class="controls">
+        <button id="startPause">Start</button>
+        <button id="reset">Reset</button>
+    </div>
+
+    <h3>Resume From Time</h3>
+
+    <div class="resumeBox">
+        <input
+            id="resumeInput"
+            placeholder="HH:MM:SS.ms"
+            value="00:00:00.000"
+        >
+        <button id="setTime">Set Time</button>
+    </div>
+
+    <p class="hint">
+        Examples:
+        <br>
+        2:13:45
+        <br>
+        02:13:45.250
+    </p>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
